@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickVsix", "QuickVsix\QuickVsix.csproj", "{384A18C6-CD74-48A6-B1A9-28491961137E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickVsixTests", "QuickVsixTests\QuickVsixTests.csproj", "{6B42001E-4B66-43CD-94B2-51F537607B90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JenkinsJobs", "JenkinsJobs", "{69E35F66-0D17-4AA8-945C-DB7D81FB07D8}"
+	ProjectSection(SolutionItems) = preProject
+		JenkinsJobs\QuickVsix.ps1 = JenkinsJobs\QuickVsix.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Readme", "Readme", "{C3558ECC-A399-4B0C-AF7C-9DCEFD27ED9A}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{3EE00BD8-1CE0-4CA2-9004-DC5A86752ADF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{C7FF508F-67B1-4BF0-8A95-D675D3F0D79C}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{384A18C6-CD74-48A6-B1A9-28491961137E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{384A18C6-CD74-48A6-B1A9-28491961137E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{384A18C6-CD74-48A6-B1A9-28491961137E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{384A18C6-CD74-48A6-B1A9-28491961137E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B42001E-4B66-43CD-94B2-51F537607B90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B42001E-4B66-43CD-94B2-51F537607B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B42001E-4B66-43CD-94B2-51F537607B90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B42001E-4B66-43CD-94B2-51F537607B90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C7FF508F-67B1-4BF0-8A95-D675D3F0D79C} = {3EE00BD8-1CE0-4CA2-9004-DC5A86752ADF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DD4E18CA-F825-4542-8665-604A45F90A76}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,52 @@
+name: QuickVsix
+on: [push]
+
+jobs:
+  build:
+    runs-on: [windows-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: microsoft/setup-msbuild@v1.1
+      - uses: nuget/setup-nuget@v1
+
+      - name: Install OpenCover.Console.exe with Chocolatey
+        run: choco install opencover --yes --cache ~/chococache
+
+      - name: Add vstest.console.exe and OpenCover.Console.exe to GITHUB_PATH
+        run: |
+          Add-Content $env:GITHUB_PATH "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\Extensions\TestPlatform"
+          Add-Content $env:GITHUB_PATH "~\AppData\Local\Apps\OpenCover"
+
+      - name: Print locations of vstest.console.exe and OpenCover.Console.exe
+        run: |
+          Get-Command vstest.console.exe | Select-Object Source
+          Get-Command OpenCover.Console.exe | Select-Object Source
+
+      - uses: actions/cache@v1
+        id: cache
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ hashFiles('**/packages.lock.json') }}
+
+      - name: NuGet Restore
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: nuget restore QuickVsix.sln
+
+      - name: NuGet Restore
+        run: nuget.exe restore QuickVsix.sln
+
+      - name: Build QuickVsix.sln
+        run: MSBuild.exe QuickVsix.sln /t:build /p:Configuration=Release /m
+
+      - name: Run QuickVsixTests.dll with OpenCover.Console.exe running vstest.console.exe
+        run: OpenCover.Console.exe -register:user -target:vstest.console.exe -targetargs:"QuickVsixTests/bin/Release/QuickVsixTests.dll /parallel" -returntargetcode -filter:"+[*]*" -excludebyattribute:"*.ExcludeFromCodeCoverage*" -output:QuickVsixTests/bin/Release/OpenCoverCodeCoverageResults_QuickVsixTests.xml
+
+      - name: Upload code coverage results to Codecov.io
+        uses: codecov/codecov-action@v1
+        with:
+          files: QuickVsixTests/bin/Release/OpenCoverCodeCoverageResults_QuickVsixTests.xml
+          fail_ci_if_error: true

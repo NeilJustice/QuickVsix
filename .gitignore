@@ -1,0 +1,10 @@
+.vs/
+bin/
+Debug/
+obj/
+packages/
+Release/
+InternalTrace.*.log
+nunit-agent_*.log
+*.user
+*.suo
