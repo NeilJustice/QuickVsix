@@ -19,7 +19,7 @@ public class QuickVsixArgsTests
    {
       var defaultQuickVsixArgs = new QuickVsixArgs();
       Assert.AreEqual("QuickVsix", defaultQuickVsixArgs.ProgramName);
-      Assert.AreEqual("1.0.0", defaultQuickVsixArgs.Version);
+      Assert.AreEqual("1.1.0", defaultQuickVsixArgs.Version);
       var expectedDefaultQuickVsixArgs = new QuickVsixArgs
       {
          programMode = ProgramMode.Unset,
@@ -37,7 +37,8 @@ public class QuickVsixArgsTests
 Usage:
    QuickVsix.exe install-vsix --vsix-file=<FilePath> [--wait-for-any-key]
    QuickVsix.exe uninstall-vsix --vsix-file=<FilePath> [--wait-for-any-key]
-   QuickVsix.exe reinstall-vsix --vsix-file=<FilePath> [--wait-for-any-key]", _quickVsixArgs.Usage);
+   QuickVsix.exe reinstall-vsix --vsix-file=<FilePath> [--wait-for-any-key]
+   QuickVsix.exe --version", _quickVsixArgs.Usage);
    }
 
    [Test]

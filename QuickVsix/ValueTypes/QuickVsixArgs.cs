@@ -7,13 +7,14 @@ using System.Collections.ObjectModel;
 public class QuickVsixArgs : NUnitEquatable, IDocoptArgs
 {
    public string ProgramName => "QuickVsix";
-   public string Version => "1.0.0";
+   public string Version => "1.1.0";
    public string Usage => @"QuickVsix - Quickly and non-interactively installs, uninstalls, or reinstalls a Visual Studio extension.
 
 Usage:
    QuickVsix.exe install-vsix --vsix-file=<FilePath> [--wait-for-any-key]
    QuickVsix.exe uninstall-vsix --vsix-file=<FilePath> [--wait-for-any-key]
-   QuickVsix.exe reinstall-vsix --vsix-file=<FilePath> [--wait-for-any-key]";
+   QuickVsix.exe reinstall-vsix --vsix-file=<FilePath> [--wait-for-any-key]
+   QuickVsix.exe --version";
 
    public string CommandLine { get; set; }
    public ProgramMode programMode;

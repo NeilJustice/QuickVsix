@@ -11,9 +11,21 @@ The default workflow for installing and uninstalling Visual Studio extensions is
 
 QuickVsix works by running VSIXInstaller.exe (which must be added to the PATH before running QuickVsix.exe) and then waiting for the VSIXInstaller.exe process to complete its extension installation or uninstallation work.
 
-#### If you are a Visual Studio extension developer who reinstalls Visual Studio extensions frequently, QuickVsix.exe saves you time:
+#### QuickVsix.exe saves you time if you frequently reinstall Visual Studio extensions:
 
 ![Visual Studio vs. QuickVsix install and uninstall speeds](Screenshots/VisualStudioVersusQuickVsixSpeeds.png)
+
+#### Command line usage
+
+```
+QuickVsix - Quickly and non-interactively installs, uninstalls, or reinstalls a Visual Studio extension.
+
+Usage:
+   QuickVsix.exe install-vsix --vsix-file=<FilePath> [--wait-for-any-key]
+   QuickVsix.exe uninstall-vsix --vsix-file=<FilePath> [--wait-for-any-key]
+   QuickVsix.exe reinstall-vsix --vsix-file=<FilePath> [--wait-for-any-key]
+   QuickVsix.exe --version
+```
 
 #### QuickVsix.exe console output for `install-vsix`:
 
