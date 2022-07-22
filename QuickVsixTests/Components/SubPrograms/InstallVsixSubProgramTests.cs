@@ -44,7 +44,7 @@ public class InstallVsixSubProgramTests
       Called.NumberOfTimes(3, () => p_consoleWriterMock.WriteProgramNameTimestampedLine(null));
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine($"Installing Visual Studio extension {args.vsixFilePath}")).Then(
       Called.Once(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath())).Then(
-      Called.Once(() => p_processKillerMock.KillProcess("mspdbsrv.exe"))).Then(
+      Called.Once(() => p_processKillerMock.KillProcess("mspdbsrv"))).Then(
       Called.Once(() => p_vsixZipFileReaderMock.PrintFileNamesContainedInVsixFile(args.vsixFilePath))).Then(
       Called.Once(() => p_processRunnerMock.Run("VSIXInstaller.exe", expectedVSIXInstallerArgs))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine(
@@ -79,7 +79,7 @@ public class InstallVsixSubProgramTests
       Called.NumberOfTimes(3, () => p_consoleWriterMock.WriteProgramNameTimestampedLine(null));
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine($"Installing Visual Studio extension {args.vsixFilePath}")).Then(
       Called.Once(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath())).Then(
-      Called.Once(() => p_processKillerMock.KillProcess("mspdbsrv.exe"))).Then(
+      Called.Once(() => p_processKillerMock.KillProcess("mspdbsrv"))).Then(
       Called.Once(() => p_vsixZipFileReaderMock.PrintFileNamesContainedInVsixFile(args.vsixFilePath))).Then(
       Called.Once(() => p_processRunnerMock.Run("VSIXInstaller.exe", expectedVSIXInstallerArgs))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine($"VSIXInstaller.exe failed with exit code {processResult.exitCode}"))).Then(
@@ -109,7 +109,7 @@ public class InstallVsixSubProgramTests
       Called.NumberOfTimes(3, () => p_consoleWriterMock.WriteProgramNameTimestampedLine(null));
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine($"Installing Visual Studio extension {args.vsixFilePath}")).Then(
       Called.Once(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath())).Then(
-         Called.Once(() => p_processKillerMock.KillProcess("mspdbsrv.exe"))).Then(
+      Called.Once(() => p_processKillerMock.KillProcess("mspdbsrv"))).Then(
       Called.Once(() => p_vsixZipFileReaderMock.PrintFileNamesContainedInVsixFile(args.vsixFilePath))).Then(
       Called.Once(() => p_processRunnerMock.Run("VSIXInstaller.exe", expectedVSIXInstallerArgs))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine($"VSIXInstaller.exe successfully installed Visual Studio extension {args.vsixFilePath}"))).Then(
