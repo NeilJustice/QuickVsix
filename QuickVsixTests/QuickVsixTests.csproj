@@ -97,6 +97,7 @@
     <Compile Include="CSharpUtils\Random\RandomGenerator.cs" />
     <Compile Include="CSharpUtils\Random\RandomGeneratorTests.cs" />
     <Compile Include="CSharpUtils\Reflection\ReflectTests.cs" />
+    <Compile Include="CSharpUtils\Strings\PluralizerTests.cs" />
     <Compile Include="CSharpUtils\Strings\StringSplitterTests.cs" />
     <Compile Include="CSharpUtils\TestUtils\UnusedVariableWarning.cs" />
     <Compile Include="CSharpUtils\Time\StopwatcherTests.cs" />

@@ -104,6 +104,7 @@
     <Compile Include="CSharpUtils\Process\ProcessHelper.cs" />
     <Compile Include="CSharpUtils\Process\ProcessKiller.cs" />
     <Compile Include="CSharpUtils\Regex\Regexer.cs" />
+    <Compile Include="CSharpUtils\Strings\Pluralizer.cs" />
     <Compile Include="CSharpUtils\UnitTesting\NUnitAsserter.cs" />
     <Compile Include="CSharpUtils\UnitTesting\NUnitEquatable.cs" />
     <Compile Include="CSharpUtils\Process\ProcessResult.cs" />

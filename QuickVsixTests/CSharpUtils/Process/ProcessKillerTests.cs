@@ -10,6 +10,7 @@ public class ProcessKillerTests
    ProcessKiller _processKiller;
    ConsoleWriter _consoleWriterMock;
    LinqHelper _linqHelperMock;
+   Pluralizer _pluralizerMock;
    ProcessHelper _processHelperMock;
    ReadOnlyCollectionMaker _readOnlyCollectionMakerMock;
 
@@ -20,6 +21,7 @@ public class ProcessKillerTests
       Assert2.AssertConsoleWriterHasProgramName("QuickVsix", _processKiller, "_consoleWriter");
       _consoleWriterMock = Mock.Component<ConsoleWriter>(_processKiller, "_consoleWriter");
       _linqHelperMock = Mock.Component<LinqHelper>(_processKiller, "_linqHelper");
+      _pluralizerMock = Mock.Component<Pluralizer>(_processKiller, "_pluralizer");
       _processHelperMock = Mock.Component<ProcessHelper>(_processKiller, "_processHelper");
       _readOnlyCollectionMakerMock = Mock.Component<ReadOnlyCollectionMaker>(_processKiller, "_readOnlyCollectionMaker");
    }
@@ -37,6 +39,8 @@ public class ProcessKillerTests
 
       Mock.Expect(() => _linqHelperMock.ForEach(default(ReadOnlyCollection<Process>), default(Action<Process>)));
 
+      string processOrProcesses = Mock.ReturnRandomString(() => _pluralizerMock.PluralizeIfNot1(0, null, null));
+
       string processName = TestRandom.String();
       //
       _processKiller.KillProcess(processName);
@@ -44,8 +48,9 @@ public class ProcessKillerTests
       Called.NumberOfTimes(3, () => _consoleWriterMock.WriteProgramNameTimestampedLine(null));
       Called.Once(() => _processHelperMock.GetProcessesByName(processName)).Then(
       Called.Once(() => _readOnlyCollectionMakerMock.MakeReadOnlyCollection(mutableProcessesWithName))).Then(
-      Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine("Killing all mspdbsrv.exe processes"))).Then(
+      Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine($"Killing all mspdbsrv.exe processes"))).Then(
       Called.Once(() => _linqHelperMock.ForEach(readOnlyProcessesWithName, _processKiller.DoKillProcess))).Then(
+      Called.Once(() => _pluralizerMock.PluralizeIfNot1(readOnlyProcessesWithName.Count, "process", "processes"))).Then(
       Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine($"Killed {readOnlyProcessesWithName.Count} mspdbsrv.exe processes"))).Then(
       Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine("")));
    }
@@ -54,17 +59,12 @@ public class ProcessKillerTests
    public void DoKillProcess_WritesKillingProcessMessage_KillsProcess_WritesKilledProcessMessage()
    {
       string processName = Mock.ReturnRandomString(() => _processHelperMock.GetProcessName(null));
-
-      Mock.Expect(() => _consoleWriterMock.WriteProgramNameTimestampedLine(null));
       Mock.Expect(() => _processHelperMock.KillProcess(null));
-
       var process = new Process();
       //
       _processKiller.DoKillProcess(process);
       //
       Called.Once(() => _processHelperMock.GetProcessName(process)).Then(
-      Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine($"Killing process {processName}"))).Then(
-      Called.Once(() => _processHelperMock.KillProcess(process))).Then(
-      Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine($"Killed process {processName}")));
+      Called.Once(() => _processHelperMock.KillProcess(process)));
    }
 }
