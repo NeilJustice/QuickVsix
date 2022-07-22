@@ -89,6 +89,7 @@
     <Compile Include="Components\SubPrograms\QuickVsixSubProgramFactory.cs" />
     <Compile Include="CSharpUtils\Asserter\Asserter.cs" />
     <Compile Include="CSharpUtils\Console\ConsoleWriter.cs" />
+    <Compile Include="CSharpUtils\DataStructures\ReadOnlyCollectionMaker.cs" />
     <Compile Include="CSharpUtils\Environment\Environmentalist.cs" />
     <Compile Include="CSharpUtils\Exceptions\OneArgTryCatchCaller.cs" />
     <Compile Include="CSharpUtils\Exceptions\TwoArgTryCatchCaller.cs" />
@@ -100,6 +101,8 @@
     <Compile Include="CSharpUtils\Iteration\LinqHelper.cs" />
     <Compile Include="CSharpUtils\Methods\MethodCaller.cs" />
     <Compile Include="CSharpUtils\Methods\Repeatedly.cs" />
+    <Compile Include="CSharpUtils\Process\ProcessHelper.cs" />
+    <Compile Include="CSharpUtils\Process\ProcessKiller.cs" />
     <Compile Include="CSharpUtils\Regex\Regexer.cs" />
     <Compile Include="CSharpUtils\UnitTesting\NUnitAsserter.cs" />
     <Compile Include="CSharpUtils\UnitTesting\NUnitEquatable.cs" />

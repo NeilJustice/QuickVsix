@@ -70,6 +70,9 @@
     <Compile Include="Components\Args\UninstallVsixArgsParserTests.cs" />
     <Compile Include="Components\Files\VsixZipFileReaderTests.cs" />
     <Compile Include="Components\Files\QuickVsixLogFilePathPrinterTests.cs" />
+    <Compile Include="CSharpUtils\DataStructures\ReadOnlyCollectionMakerTests.cs" />
+    <Compile Include="CSharpUtils\Process\ProcessHelperTests.cs" />
+    <Compile Include="CSharpUtils\Process\ProcessKillerTests.cs" />
     <Compile Include="CSharpUtils\Regex\RegexerTests.cs" />
     <Compile Include="Components\ResultAndExitCodePrinter\ResultAndExitCodePrinterTests.cs" />
     <Compile Include="Components\SubPrograms\QuickVsixSubProgramTests.cs" />
