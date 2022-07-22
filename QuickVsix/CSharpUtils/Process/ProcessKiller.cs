@@ -17,7 +17,7 @@ public class ProcessKiller
       _consoleWriter.WriteProgramNameTimestampedLine("Killing all mspdbsrv.exe processes which delay installs and uninstalls of .vsix extensions");
       _linqHelper.ForEach(readOnlyProcessesWithName, DoKillProcess);
       string processOrProcesses = _pluralizer.PluralizeIfNot1(readOnlyProcessesWithName.Count, "process", "processes");
-      _consoleWriter.WriteProgramNameTimestampedLine($"Killed {readOnlyProcessesWithName.Count} mspdbsrv.exe processes");
+      _consoleWriter.WriteProgramNameTimestampedLine($"Killed {readOnlyProcessesWithName.Count} mspdbsrv.exe {processOrProcesses}");
       _consoleWriter.WriteProgramNameTimestampedLine("");
    }
 

@@ -51,7 +51,7 @@ public class ProcessKillerTests
       Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine($"Killing all mspdbsrv.exe processes which delay installs and uninstalls of .vsix extensions"))).Then(
       Called.Once(() => _linqHelperMock.ForEach(readOnlyProcessesWithName, _processKiller.DoKillProcess))).Then(
       Called.Once(() => _pluralizerMock.PluralizeIfNot1(readOnlyProcessesWithName.Count, "process", "processes"))).Then(
-      Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine($"Killed {readOnlyProcessesWithName.Count} mspdbsrv.exe processes"))).Then(
+      Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine($"Killed {readOnlyProcessesWithName.Count} mspdbsrv.exe {processOrProcesses}"))).Then(
       Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine("")));
    }
 
