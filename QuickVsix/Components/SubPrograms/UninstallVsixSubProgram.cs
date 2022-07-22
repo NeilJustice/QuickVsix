@@ -9,6 +9,9 @@ public class UninstallVsixSubProgram : QuickVsixSubProgram
       p_quickVsixLogFilePathPrinter.PrintQuickVsixLogFilePath();
 
       string extensionGuid = p_vsixZipFileReader.ReadVsixFileForExtensionGuid(args.vsixFilePath);
+
+      p_processKiller.KillProcess("mspdbsrv.exe");
+
       string vsixInstallerArgs = $"/uninstall:{extensionGuid} /quiet /shutdownprocesses /logFile:QuickVsix.log";
       ProcessResult processResult = p_processRunner.Run("VSIXInstaller.exe", vsixInstallerArgs);
 

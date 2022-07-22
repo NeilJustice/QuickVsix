@@ -8,6 +8,8 @@ public class InstallVsixSubProgram : QuickVsixSubProgram
 
       p_quickVsixLogFilePathPrinter.PrintQuickVsixLogFilePath();
 
+      p_processKiller.KillProcess("mspdbsrv.exe");
+
       p_vsixZipFileReader.PrintFileNamesContainedInVsixFile(args.vsixFilePath);
 
       string vsixInstallerArgs = $"{args.vsixFilePath} /quiet /shutdownprocesses /norepair /logFile:QuickVsix.log";

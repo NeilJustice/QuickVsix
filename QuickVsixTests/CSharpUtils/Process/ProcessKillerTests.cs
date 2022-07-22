@@ -25,7 +25,7 @@ public class ProcessKillerTests
    }
 
    [Test]
-   public void KillProcessByName_GetsProcessWithName_KillsEachProcess()
+   public void KillProcess_GetsProcessWithName_KillsEachProcess()
    {
       Process[] mutableProcessesWithName = TestRandom.Array<Process>();
       Mock.Return(() => _processHelperMock.GetProcessesByName(null), mutableProcessesWithName);
@@ -33,19 +33,25 @@ public class ProcessKillerTests
       ReadOnlyCollection<Process> readOnlyProcessesWithName = TestRandom.Array<Process>().ToReadOnlyCollection();
       Mock.Return(() => _readOnlyCollectionMakerMock.MakeReadOnlyCollection(default(Process[])), readOnlyProcessesWithName);
 
+      Mock.Expect(() => _consoleWriterMock.WriteProgramNameTimestampedLine(null));
+
       Mock.Expect(() => _linqHelperMock.ForEach(default(ReadOnlyCollection<Process>), default(Action<Process>)));
 
       string processName = TestRandom.String();
       //
-      _processKiller.KillProcessByName(processName);
+      _processKiller.KillProcess(processName);
       //
+      Called.NumberOfTimes(3, () => _consoleWriterMock.WriteProgramNameTimestampedLine(null));
       Called.Once(() => _processHelperMock.GetProcessesByName(processName)).Then(
       Called.Once(() => _readOnlyCollectionMakerMock.MakeReadOnlyCollection(mutableProcessesWithName))).Then(
-      Called.Once(() => _linqHelperMock.ForEach(readOnlyProcessesWithName, _processKiller.KillProcess)));
+      Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine("Killing all mspdbsrv.exe processes"))).Then(
+      Called.Once(() => _linqHelperMock.ForEach(readOnlyProcessesWithName, _processKiller.DoKillProcess))).Then(
+      Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine($"Killed {readOnlyProcessesWithName.Count} mspdbsrv.exe processes"))).Then(
+      Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine("")));
    }
 
    [Test]
-   public void KillProcess_WritesKillingProcessMessage_KillsProcess_WritesKilledProcessMessage()
+   public void DoKillProcess_WritesKillingProcessMessage_KillsProcess_WritesKilledProcessMessage()
    {
       string processName = Mock.ReturnRandomString(() => _processHelperMock.GetProcessName(null));
 
@@ -54,7 +60,7 @@ public class ProcessKillerTests
 
       var process = new Process();
       //
-      _processKiller.KillProcess(process);
+      _processKiller.DoKillProcess(process);
       //
       Called.Once(() => _processHelperMock.GetProcessName(process)).Then(
       Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine($"Killing process {processName}"))).Then(

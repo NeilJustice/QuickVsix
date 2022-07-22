@@ -10,6 +10,7 @@ public static class QuickVsixSubProgramTests
       var quickVsixSubProgram = new QuickVsixSubProgram();
       Assert2.AssertConsoleWriterHasProgramName("QuickVsix", quickVsixSubProgram, "p_consoleWriter");
       Assert2.AssertProcessRunnerHasProgramName("QuickVsix", quickVsixSubProgram, "p_processRunner");
+      Assert2.FieldIsNonNullAndExactType<ProcessKiller>(quickVsixSubProgram, "p_processKiller");
       Assert2.FieldIsNonNullAndExactType<QuickVsixLogFilePathPrinter>(quickVsixSubProgram, "p_quickVsixLogFilePathPrinter");
       Assert2.FieldIsNonNullAndExactType<VsixZipFileReader>(quickVsixSubProgram, "p_vsixZipFileReader");
    }
