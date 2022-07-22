@@ -7,15 +7,15 @@ QuickVsix is a C# Windows command line program for quickly and non-interactively
 |GitHub Actions Release build - windows-latest Visual Studio 2022|[![QuickVsix](https://github.com/NeilJustice/QuickVsix/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/QuickVsix/actions/workflows/build.yml)|
 |Codecov.io C# code coverage|[![codecov](https://codecov.io/gh/NeilJustice/QuickVsix/branch/main/graph/badge.svg?token=bkBnGJEyHz)](https://codecov.io/gh/NeilJustice/QuickVsix)|
 
-The default workflow for installing and uninstalling Visual Studio extensions is by way of a sequence of mouse clicks on interactive installation and uninstallation dialogs, which costs time relative to the non-interactive command line experience provided by QuickVsix.exe.
+The default workflow for installing and uninstalling Visual Studio extensions is by way of a sequence of mouse clicks on interactive install and uninstall dialogs, which costs time relative to the non-interactive command line experience provided by QuickVsix.exe.
 
-QuickVsix works by running VSIXInstaller.exe (which must be added to the PATH before running QuickVsix.exe) and then waiting for the VSIXInstaller.exe process to complete its extension installation or uninstallation work.
+QuickVsix works by running VSIXInstaller.exe (which must be added to the PATH before running QuickVsix.exe) and then waiting for the VSIXInstaller.exe process to complete its extension install, uninstall, or reinstall work.
 
-#### QuickVsix.exe saves you time if you frequently reinstall Visual Studio extensions:
+#### QuickVsix.exe saves you time if you frequently reinstall Visual Studio extensions under development:
 
 ![Visual Studio vs. QuickVsix install and uninstall speeds](Screenshots/VisualStudioVersusQuickVsixSpeeds.png)
 
-#### Command line usage
+#### QuickVsix.exe command line usage
 
 ```
 QuickVsix - Quickly and non-interactively installs, uninstalls, or reinstalls Visual Studio extensions.
