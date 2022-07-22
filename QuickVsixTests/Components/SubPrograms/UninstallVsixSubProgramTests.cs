@@ -6,6 +6,7 @@ public class UninstallVsixSubProgramTests
 {
    UninstallVsixSubProgram _uninstallVsixSubProgram;
    ConsoleWriter p_consoleWriterMock;
+   ProcessKiller p_processKillerMock;
    ProcessRunner p_processRunnerMock;
    QuickVsixLogFilePathPrinter p_quickVsixLogFilePathPrinterMock;
    VsixZipFileReader p_vsixZipFileReaderMock;
@@ -15,6 +16,7 @@ public class UninstallVsixSubProgramTests
    {
       _uninstallVsixSubProgram = new UninstallVsixSubProgram();
       p_consoleWriterMock = Mock.Component<ConsoleWriter>(_uninstallVsixSubProgram, "p_consoleWriter");
+      p_processKillerMock = Mock.Component<ProcessKiller>(_uninstallVsixSubProgram, "p_processKiller");
       p_processRunnerMock = Mock.Component<ProcessRunner>(_uninstallVsixSubProgram, "p_processRunner");
       p_quickVsixLogFilePathPrinterMock = Mock.Component<QuickVsixLogFilePathPrinter>(_uninstallVsixSubProgram, "p_quickVsixLogFilePathPrinter");
       p_vsixZipFileReaderMock = Mock.Component<VsixZipFileReader>(_uninstallVsixSubProgram, "p_vsixZipFileReader");
@@ -28,6 +30,9 @@ public class UninstallVsixSubProgramTests
       Mock.Expect(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath());
 
       string extensionGuid = Mock.ReturnRandomString(() => p_vsixZipFileReaderMock.ReadVsixFileForExtensionGuid(null));
+
+      Mock.Expect(() => p_processKillerMock.KillProcess(null));
+
       var processResult = TestRandom.ProcessResultWithExitCode(1002);
       Mock.Return(() => p_processRunnerMock.Run(null, null), processResult);
 
@@ -40,6 +45,7 @@ public class UninstallVsixSubProgramTests
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine($"Uninstalling Visual Studio extension {args.vsixFilePath}")).Then(
       Called.Once(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath())).Then(
       Called.Once(() => p_vsixZipFileReaderMock.ReadVsixFileForExtensionGuid(args.vsixFilePath))).Then(
+      Called.Once(() => p_processKillerMock.KillProcess("mspdbsrv"))).Then(
       Called.WasCalled(() => p_processRunnerMock.Run("VSIXInstaller.exe", expectedVsixInstallerArgs))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine($"VSIXInstaller.exe exited with code 1002 - meaning the extension is already uninstalled"))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine("")));
@@ -58,6 +64,9 @@ public class UninstallVsixSubProgramTests
       Mock.Expect(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath());
 
       string extensionGuid = Mock.ReturnRandomString(() => p_vsixZipFileReaderMock.ReadVsixFileForExtensionGuid(null));
+
+      Mock.Expect(() => p_processKillerMock.KillProcess(null));
+
       var processResult = TestRandom.ProcessResultWithExitCode(vsixInstallerExitCode);
       Mock.Return(() => p_processRunnerMock.Run(null, null), processResult);
 
@@ -70,6 +79,7 @@ public class UninstallVsixSubProgramTests
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine($"Uninstalling Visual Studio extension {args.vsixFilePath}")).Then(
       Called.Once(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath())).Then(
       Called.Once(() => p_vsixZipFileReaderMock.ReadVsixFileForExtensionGuid(args.vsixFilePath))).Then(
+      Called.Once(() => p_processKillerMock.KillProcess("mspdbsrv"))).Then(
       Called.WasCalled(() => p_processRunnerMock.Run("VSIXInstaller.exe", expectedVsixInstallerArgs))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine($"VSIXInstaller.exe failed with exit code {processResult.exitCode}"))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine("")));
@@ -84,6 +94,9 @@ public class UninstallVsixSubProgramTests
       Mock.Expect(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath());
 
       string extensionGuid = Mock.ReturnRandomString(() => p_vsixZipFileReaderMock.ReadVsixFileForExtensionGuid(null));
+
+      Mock.Expect(() => p_processKillerMock.KillProcess(null));
+
       var processResult = TestRandom.ProcessResultWithExitCode(0);
       Mock.Return(() => p_processRunnerMock.Run(null, null), processResult);
 
@@ -96,6 +109,7 @@ public class UninstallVsixSubProgramTests
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine($"Uninstalling Visual Studio extension {args.vsixFilePath}")).Then(
       Called.Once(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath())).Then(
       Called.Once(() => p_vsixZipFileReaderMock.ReadVsixFileForExtensionGuid(args.vsixFilePath))).Then(
+      Called.Once(() => p_processKillerMock.KillProcess("mspdbsrv"))).Then(
       Called.Once(() => p_processRunnerMock.Run("VSIXInstaller.exe", expectedVsixInstallerArgs))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine($"VSIXInstaller.exe successfully uninstalled Visual Studio extension {args.vsixFilePath}"))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine("")));
