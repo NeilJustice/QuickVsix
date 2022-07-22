@@ -32,12 +32,13 @@ public class QuickVsixArgsTests
    [Test]
    public void Usage_ReturnsExpectedProgramUsageText()
    {
-      Assert.AreEqual(@"QuickVsix - Quickly and non-interactively installs, uninstalls, or reinstalls a Visual Studio extension.
+      Assert.AreEqual(@"QuickVsix - Quickly and non-interactively installs, uninstalls, or reinstalls Visual Studio extensions.
 
 Usage:
    QuickVsix.exe install-vsix --vsix-file=<FilePath> [--wait-for-any-key]
    QuickVsix.exe uninstall-vsix --vsix-file=<FilePath> [--wait-for-any-key]
    QuickVsix.exe reinstall-vsix --vsix-file=<FilePath> [--wait-for-any-key]
+   QuickVsix.exe --help
    QuickVsix.exe --version", _quickVsixArgs.Usage);
    }
 
