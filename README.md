@@ -30,13 +30,19 @@ Usage:
 
 #### QuickVsix.exe console output for `install-vsix`:
 
+`QuickVsix.exe install-vsix --vsix-file=C:\Code\OneStrokeStudio\OneStrokeStudio\bin\Debug\OneStrokeStudio.vsix`
+
 ![install-vsix console output](Screenshots/InstallVsixConsoleOutput.png)
 
 #### QuickVsix.exe console output for `uninstall-vsix`:
 
+`QuickVsix.exe uninstall-vsix --vsix-file=C:\Code\OneStrokeStudio\OneStrokeStudio\bin\Debug\OneStrokeStudio.vsix`
+
 ![uninstall-vsix console output](Screenshots/UninstallVsixConsoleOutput.png)
 
 #### QuickVsix.exe console output for `reinstall-vsix`:
+
+`QuickVsix.exe reinstall-vsix --vsix-file=C:\Code\OneStrokeStudio\OneStrokeStudio\bin\Debug\OneStrokeStudio.vsix`
 
 ![reinstall-vsix console output](Screenshots/ReinstallVsixConsoleOutput.png)
 
