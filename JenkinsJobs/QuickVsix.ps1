@@ -1,4 +1,4 @@
-param([bool]$doInstall = $True)
+param([string]$doInstall = "true")
 
 BuildAnalyzeTestDeploy.exe csharp-program `
    --solution-name=QuickVsix `
