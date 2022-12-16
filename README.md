@@ -1,5 +1,5 @@
 <p align="center"> 
-<img src="Images/QuickVsixLogo.png" width="50%"><br>
+<img src="Images/QuickVsixLogo.png" width="64%"><br>
 <a href="https://github.com/NeilJustice/QuickVsix/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/QuickVsix/actions/workflows/build.yml/badge.svg"></a>
 <a href="https://codecov.io/gh/NeilJustice/QuickVsix"><img src="https://codecov.io/gh/NeilJustice/QuickVsix/branch/main/graph/badge.svg?token=bkBnGJEyHz"></a>
 </p>
