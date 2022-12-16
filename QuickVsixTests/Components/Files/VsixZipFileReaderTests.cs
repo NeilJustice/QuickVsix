@@ -1,6 +1,5 @@
 ﻿using CSharpUtils;
 using NUnit.Framework;
-using System;
 using System.Collections.ObjectModel;
 
 [TestFixture]
