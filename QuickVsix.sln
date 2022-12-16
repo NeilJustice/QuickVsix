@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickVsix", "QuickVsix\QuickVsix.csproj", "{B7366A51-5137-4050-9256-5F492C83ABC4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickVsixTests", "QuickVsixTests\QuickVsixTests.csproj", "{40CAE1DB-498B-4C7D-A497-CA748EDDFC2B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JenkinsJob", "JenkinsJob", "{F9322114-61AA-4E2B-BD87-E0825AE85287}"
+	ProjectSection(SolutionItems) = preProject
+		JenkinsJobs\QuickVsix.ps1 = JenkinsJobs\QuickVsix.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".editorconfig", ".editorconfig", "{F3DE8AC6-5FCE-4AE7-A368-52FB351FEA43}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{4DCB7501-0F68-4C17-8E1C-58FB331956D3}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B7366A51-5137-4050-9256-5F492C83ABC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7366A51-5137-4050-9256-5F492C83ABC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7366A51-5137-4050-9256-5F492C83ABC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7366A51-5137-4050-9256-5F492C83ABC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40CAE1DB-498B-4C7D-A497-CA748EDDFC2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40CAE1DB-498B-4C7D-A497-CA748EDDFC2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40CAE1DB-498B-4C7D-A497-CA748EDDFC2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40CAE1DB-498B-4C7D-A497-CA748EDDFC2B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D5B506A0-A4A3-401E-B351-FFC6425CD7E1}
+	EndGlobalSection
+EndGlobal

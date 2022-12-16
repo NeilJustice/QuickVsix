@@ -1,0 +1,18 @@
+__Instrumented/
+.vs/
+bin/
+Debug/
+InternalTrace*
+obj/
+packages/
+Release/
+*.user
+*.suo
+nunit-agent_*.log
+QuickVsixTests/AltCoverCodeCoverageResults_QuickVsixTests.xml
+QuickVsixTests/CoberturaCodeCoverageResults_QuickVsixTests.xml
+ReportGenerator_QuickVsixTests/
+
+# SonarQube
+.scannerwork/
+.sonarqube/
