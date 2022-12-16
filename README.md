@@ -57,6 +57,6 @@ Resulting executable QuickVsix.exe:
 
 ![QuickVsix built executable](Images/QuickVsixBuiltExecutable.png)
 
-Contents of release `QuickVsix.v1.1.0.zip`:
+Contents of release `QuickVsix-v1.1.0.zip`:
 
 ![QuickVsix built executable](Images/ContentOfQuickVsixReleaseZipFile.png)
