@@ -1,6 +1,8 @@
-# QuickVsix
-
-[![QuickVsix](https://github.com/NeilJustice/QuickVsix/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/QuickVsix/actions/workflows/build.yml) [![codecov](https://codecov.io/gh/NeilJustice/QuickVsix/branch/main/graph/badge.svg?token=bkBnGJEyHz)](https://codecov.io/gh/NeilJustice/QuickVsix)
+<p align="center"> 
+<img src="Images/QuickVsixLogo.png"><br>
+<a href="https://github.com/NeilJustice/QuickVsix/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/QuickVsix/actions/workflows/build.yml/badge.svg"></a>
+<a href="https://codecov.io/gh/NeilJustice/QuickVsix"><img src="https://codecov.io/gh/NeilJustice/QuickVsix/branch/main/graph/badge.svg?token=bkBnGJEyHz"></a>
+</p>
 
 QuickVsix is a C#/.NET 7 Windows command line program for quickly and non-interactively installing and uninstalling Visual Studio extensions.
 
@@ -10,7 +12,7 @@ QuickVsix works by running VSIXInstaller.exe and then waiting for VSIXInstaller.
 
 ### QuickVsix unlocks time savings for Visual Studio extension developers
 
-![Visual Studio vs. QuickVsix install and uninstall speeds](Screenshots/VisualStudioVersusQuickVsixSpeeds.png)
+![Visual Studio vs. QuickVsix install and uninstall speeds](Images/VisualStudioVersusQuickVsixSpeeds.png)
 
 ### QuickVsix.exe command line usage
 
@@ -29,19 +31,19 @@ Usage:
 
 `QuickVsix.exe install-vsix --vsix-file=C:\Code\OneStrokeStudio\OneStrokeStudio\bin\Debug\OneStrokeStudio.vsix`
 
-![install-vsix console output](Screenshots/InstallVsixConsoleOutput.png)
+![install-vsix console output](Images/InstallVsixConsoleOutput.png)
 
 ### Console output for `QuickVsix.exe uninstall-vsix`
 
 `QuickVsix.exe uninstall-vsix --vsix-file=C:\Code\OneStrokeStudio\OneStrokeStudio\bin\Debug\OneStrokeStudio.vsix`
 
-![uninstall-vsix console output](Screenshots/UninstallVsixConsoleOutput.png)
+![uninstall-vsix console output](Images/UninstallVsixConsoleOutput.png)
 
 Console output for `QuickVsix.exe reinstall-vsix` is the console output for `QuickVsix.exe uninstall-vsix` followed by the console output for `QuickVsix.exe install-vsix`.
 
 ### Code structure as it appears in Visual Studio 2022
 
-![QuickVsix code structure](Screenshots/CodeStructure.png)
+![QuickVsix code structure](Images/CodeStructure.png)
 
 ### Steps for building QuickVsix.exe from source
 
@@ -53,8 +55,8 @@ dotnet build --configuration Release
 
 Resulting executable QuickVsix.exe:
 
-![QuickVsix built executable](Screenshots/QuickVsixBuiltExecutable.png)
+![QuickVsix built executable](Images/QuickVsixBuiltExecutable.png)
 
 Contents of release `QuickVsix.v1.1.0.zip`:
 
-![QuickVsix built executable](Screenshots/ContentOfQuickVsixReleaseZipFile.png)
+![QuickVsix built executable](Images/ContentOfQuickVsixReleaseZipFile.png)
