@@ -30,6 +30,7 @@ jobs:
         with:
           files: QuickVsixTests/AltCoverCodeCoverageResults_QuickVsixTests.xml
           fail_ci_if_error: true
+          verbose: true
 
       - name: Archive QuickVsix.exe
         uses: actions/upload-artifact@v3
