@@ -60,3 +60,7 @@ Resulting executable QuickVsix.exe:
 Contents of release `QuickVsix-v1.1.0.zip`:
 
 ![QuickVsix built executable](Images/ContentOfQuickVsixReleaseZipFile.png)
+
+### Thanks to
+
+<a href="https://brandmark.io">brandmark.io</a> for QuickVsix's logo
