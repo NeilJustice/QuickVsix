@@ -63,4 +63,4 @@ Contents of release `QuickVsix-v1.1.0.zip`:
 
 ### Thanks to
 
-<a href="https://brandmark.io">brandmark.io</a> for QuickVsix's logo
+<a href="https://brandmark.io">brandmark.io</a> for QuickVsix's AI-generated logo
