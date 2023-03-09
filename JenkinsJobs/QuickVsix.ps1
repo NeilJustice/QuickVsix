@@ -31,7 +31,7 @@ Exit-If-LastExitCode-Not-0
 
 if ($doInstall -eq "true")
 {
-   Remove-Item -Recurse -Verbose "C:\bin\QuickVsix"
+   Remove-Item -Recurse -Verbose "C:\bin\QuickVsix" -ErrorAction Ignore | Out-Null
    mkdir "C:\bin\QuickVsix" -ErrorAction Ignore | Out-Null
    Copy-Item -Verbose "QuickVsix\bin\Release\net7.0\*" "C:\bin\QuickVsix\"
 }
