@@ -36,13 +36,14 @@ public class ProcessKillerTests
       //
       _processKiller.KillAllPotentiallyBlockingProcesses();
       //
-      Called.NumberOfTimes(12, () => _methodCallerMock.CallAction(default(Action<string>), null));
+      Called.NumberOfTimes(14, () => _methodCallerMock.CallAction(default(Action<string>), null));
       Called.NumberOfTimes(2, () => _consoleWriterMock.WriteProgramNameTimestampedLine(null));
       Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine("Killing all processes that could potentially block VSIXInstaller.exe"));
       Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine(""));
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "Microsoft.ServiceHub.Controller")).Then(
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "MSBuild"))).Then(
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "mspdbsrv"))).Then(
+      Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "node"))).Then(
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "ServiceHub.Host.dotnet.x64"))).Then(
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "ServiceHub.Host.netfx.x86"))).Then(
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "ServiceHub.IdentityHost"))).Then(
@@ -51,7 +52,8 @@ public class ProcessKillerTests
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "ServiceHub.RoslynCodeAnalysisService"))).Then(
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "ServiceHub.SettingsHost"))).Then(
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "ServiceHub.ThreadedWaitDialog"))).Then(
-      Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "ServiceHub.VSDetouredHost")));
+      Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "ServiceHub.VSDetouredHost"))).Then(
+      Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "vstest.console")));
    }
 
    [Test]

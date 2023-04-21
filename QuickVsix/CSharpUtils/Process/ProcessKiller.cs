@@ -18,6 +18,7 @@ public class ProcessKiller
       _methodCaller.CallAction(KillProcess, "Microsoft.ServiceHub.Controller");
       _methodCaller.CallAction(KillProcess, "MSBuild");
       _methodCaller.CallAction(KillProcess, "mspdbsrv");
+      _methodCaller.CallAction(KillProcess, "node");
       _methodCaller.CallAction(KillProcess, "ServiceHub.Host.dotnet.x64");
       _methodCaller.CallAction(KillProcess, "ServiceHub.Host.netfx.x86");
       _methodCaller.CallAction(KillProcess, "ServiceHub.IdentityHost");
@@ -27,6 +28,7 @@ public class ProcessKiller
       _methodCaller.CallAction(KillProcess, "ServiceHub.SettingsHost");
       _methodCaller.CallAction(KillProcess, "ServiceHub.ThreadedWaitDialog");
       _methodCaller.CallAction(KillProcess, "ServiceHub.VSDetouredHost");
+      _methodCaller.CallAction(KillProcess, "vstest.console");
    }
 
    public virtual void KillProcess(string processNameWithoutExeExtension)
