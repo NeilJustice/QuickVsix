@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CSharpUtils
+﻿namespace CSharpUtils
 {
    public class OneArgTryCatchCaller
    {

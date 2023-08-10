@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Security.Principal;
 
 namespace CSharpUtils
@@ -13,6 +12,17 @@ namespace CSharpUtils
       {
          string currentDirectoryPath = Environment.CurrentDirectory;
          return currentDirectoryPath;
+      }
+
+      public virtual string GetUserEnvironmentVariable(string environmentVariableName)
+      {
+         string userEnvironmentVariable = _methodCaller.CallFunction(
+            Environment.GetEnvironmentVariable, environmentVariableName, EnvironmentVariableTarget.User);
+         if (userEnvironmentVariable == null)
+         {
+            throw new ArgumentException($"User environment variable {environmentVariableName} is not defined");
+         }
+         return userEnvironmentVariable;
       }
 
       public virtual string GetMachineEnvironmentVariable(string environmentVariableName)

@@ -2,7 +2,7 @@
   "profiles": {
     "QuickVsix": {
       "commandName": "Project",
-      "commandLineArgs": "uninstall-vsix --vsix-file=C:\\Code\\OneStrokeStudio\\OneStrokeStudio\\bin\\Debug\\OneStrokeStudio.vsix"
+      "commandLineArgs": "install-vsix --vsix-file=C:\\Code\\OneStrokeStudio\\OneStrokeStudio\\bin\\Debug\\OneStrokeStudio.vsix"
     }
   }
 }

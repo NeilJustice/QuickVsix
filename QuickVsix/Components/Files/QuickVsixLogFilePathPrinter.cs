@@ -8,7 +8,7 @@ public class QuickVsixLogFilePathPrinter
 
    public virtual void PrintQuickVsixLogFilePath()
    {
-      string tempFolderPath = _environmentalist.GetMachineEnvironmentVariable("TEMP");
+      string tempFolderPath = _environmentalist.GetUserEnvironmentVariable("TEMP");
       string quickVsixLogFilePath = _fileSystem.CombineTwoPaths(tempFolderPath, "QuickVsix.log");
       _consoleWriter.WriteProgramNameTimestampedLine($"VSIXInstaller.exe log file: {quickVsixLogFilePath}");
    }
