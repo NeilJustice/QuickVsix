@@ -25,17 +25,6 @@ namespace CSharpUtils
          return userEnvironmentVariable;
       }
 
-      public virtual string GetMachineEnvironmentVariable(string environmentVariableName)
-      {
-         string machineEnvironmentVariable = _methodCaller.CallFunction(
-            Environment.GetEnvironmentVariable, environmentVariableName, EnvironmentVariableTarget.Machine);
-         if (machineEnvironmentVariable == null)
-         {
-            throw new ArgumentException($"Machine environment variable {environmentVariableName} is not defined");
-         }
-         return machineEnvironmentVariable;
-      }
-
       public virtual void Exit(int exitCode)
       {
          _methodCaller.CallAction(Environment.Exit, exitCode);

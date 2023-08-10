@@ -16,27 +16,29 @@ public class EnvironmentalistTests
    }
 
    [Test]
-   public void GetMachineEnvironmentVariable_EnvironmentVariableIsNotDefined_ThrowsArgumentException()
+   public void GetUserEnvironmentVariable_EnvironmentVariableIsNotDefined_ThrowsArgumentException()
    {
       Mock.Return(() => _methodCallerMock.CallFunction(default(Func<string, EnvironmentVariableTarget, string>), null, default), null);
       string environmentVariableName = TestRandom.String();
       //
-      Assert2.Throws<ArgumentException>(() => _environmentalist.GetMachineEnvironmentVariable(environmentVariableName),
-         $"Machine environment variable {environmentVariableName} is not defined");
+      Assert2.Throws<ArgumentException>(() => _environmentalist.GetUserEnvironmentVariable(environmentVariableName),
+         $"User environment variable {environmentVariableName} is not defined");
       //
-      Called.Once(() => _methodCallerMock.CallFunction(Environment.GetEnvironmentVariable, environmentVariableName, EnvironmentVariableTarget.Machine));
+      Called.Once(() => _methodCallerMock.CallFunction(
+         Environment.GetEnvironmentVariable, environmentVariableName, EnvironmentVariableTarget.User));
    }
 
    [Test]
-   public void GetMachineEnvironmentVariable_EnvironmentVariableIsDefined_ReturnsValue()
+   public void GetUserEnvironmentVariable_EnvironmentVariableIsDefined_ReturnsValue()
    {
       string environmentVariableValue = Mock.ReturnRandomString(
          () => _methodCallerMock.CallFunction(default(Func<string, EnvironmentVariableTarget, string>), null, default));
       string environmentVariableName = TestRandom.String();
       //
-      string returnedEnvironmentVariableValue = _environmentalist.GetMachineEnvironmentVariable(environmentVariableName);
+      string returnedEnvironmentVariableValue = _environmentalist.GetUserEnvironmentVariable(environmentVariableName);
       //
-      Called.Once(() => _methodCallerMock.CallFunction(Environment.GetEnvironmentVariable, environmentVariableName, EnvironmentVariableTarget.Machine));
+      Called.Once(() => _methodCallerMock.CallFunction(
+         Environment.GetEnvironmentVariable, environmentVariableName, EnvironmentVariableTarget.User));
       Assert.AreEqual(environmentVariableValue, returnedEnvironmentVariableValue);
    }
 
