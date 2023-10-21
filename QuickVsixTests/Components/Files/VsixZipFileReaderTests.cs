@@ -1,6 +1,6 @@
-﻿using CSharpUtils;
+﻿using System.Collections.ObjectModel;
+using CSharpUtils;
 using NUnit.Framework;
-using System.Collections.ObjectModel;
 
 [TestFixture]
 public class VsixZipFileReaderTests

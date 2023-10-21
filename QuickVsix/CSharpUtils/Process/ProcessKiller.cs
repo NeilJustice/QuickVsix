@@ -13,8 +13,9 @@ public class ProcessKiller
 
    public virtual void KillAllPotentiallyBlockingProcesses()
    {
-      _consoleWriter.WriteProgramNameTimestampedLine("Killing all processes that could potentially block VSIXInstaller.exe");
+      _consoleWriter.WriteProgramNameTimestampedLine("Killing all processes that can block VSIXInstaller.exe");
       _consoleWriter.WriteProgramNameTimestampedLine("");
+      _methodCaller.CallAction(KillProcess, "cl");
       _methodCaller.CallAction(KillProcess, "Microsoft.ServiceHub.Controller");
       _methodCaller.CallAction(KillProcess, "MSBuild");
       _methodCaller.CallAction(KillProcess, "mspdbsrv");

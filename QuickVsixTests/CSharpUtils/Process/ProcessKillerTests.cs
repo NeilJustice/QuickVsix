@@ -36,11 +36,12 @@ public class ProcessKillerTests
       //
       _processKiller.KillAllPotentiallyBlockingProcesses();
       //
-      Called.NumberOfTimes(14, () => _methodCallerMock.CallAction(default(Action<string>), null));
+      Called.NumberOfTimes(15, () => _methodCallerMock.CallAction(default(Action<string>), null));
       Called.NumberOfTimes(2, () => _consoleWriterMock.WriteProgramNameTimestampedLine(null));
-      Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine("Killing all processes that could potentially block VSIXInstaller.exe"));
+      Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine("Killing all processes that can block VSIXInstaller.exe"));
       Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine(""));
-      Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "Microsoft.ServiceHub.Controller")).Then(
+      Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "cl")).Then(
+      Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "Microsoft.ServiceHub.Controller"))).Then(
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "MSBuild"))).Then(
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "mspdbsrv"))).Then(
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "node"))).Then(

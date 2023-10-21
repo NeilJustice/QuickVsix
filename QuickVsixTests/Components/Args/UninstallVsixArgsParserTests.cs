@@ -1,7 +1,6 @@
 ﻿using CSharpUtils;
 using DocoptPlus;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 [TestFixture]
 public class UninstallVsixArgsParserTests
