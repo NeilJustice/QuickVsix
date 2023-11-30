@@ -36,7 +36,7 @@ public class ProcessKillerTests
       //
       _processKiller.KillAllPotentiallyBlockingProcesses();
       //
-      Called.NumberOfTimes(15, () => _methodCallerMock.CallAction(default(Action<string>), null));
+      Called.NumberOfTimes(16, () => _methodCallerMock.CallAction(default(Action<string>), null));
       Called.NumberOfTimes(2, () => _consoleWriterMock.WriteProgramNameTimestampedLine(null));
       Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine("Killing all processes that can block VSIXInstaller.exe"));
       Called.WasCalled(() => _consoleWriterMock.WriteProgramNameTimestampedLine(""));
@@ -54,6 +54,7 @@ public class ProcessKillerTests
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "ServiceHub.SettingsHost"))).Then(
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "ServiceHub.ThreadedWaitDialog"))).Then(
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "ServiceHub.VSDetouredHost"))).Then(
+      Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "vctip"))).Then(
       Called.WasCalled(() => _methodCallerMock.CallAction(_processKiller.KillProcess, "vstest.console")));
    }
 

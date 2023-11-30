@@ -29,6 +29,7 @@ public class ProcessKiller
       _methodCaller.CallAction(KillProcess, "ServiceHub.SettingsHost");
       _methodCaller.CallAction(KillProcess, "ServiceHub.ThreadedWaitDialog");
       _methodCaller.CallAction(KillProcess, "ServiceHub.VSDetouredHost");
+      _methodCaller.CallAction(KillProcess, "vctip");
       _methodCaller.CallAction(KillProcess, "vstest.console");
    }
 
