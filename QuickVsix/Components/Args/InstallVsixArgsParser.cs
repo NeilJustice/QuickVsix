@@ -7,7 +7,7 @@ public class InstallVsixArgsParser : ProgramModeSpecificArgsParser
    {
       var args = new QuickVsixArgs();
       args.programMode = programMode;
-      args.vsixFilePath = p_docoptParser.GetRequiredFilePathWhichMustAlreadyExist(docoptDictionary, "--vsix-file");
+      args.vsixFilePath = p_docoptParser.GetRequiredFilePathWhichMustExist(docoptDictionary, "--vsix-file");
       args.waitForAnyKey = p_docoptParser.GetOptionalBool(docoptDictionary, "--wait-for-any-key");
       return args;
    }
