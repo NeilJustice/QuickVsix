@@ -25,7 +25,7 @@ public class QuickVsixProgram
       int exitCode = subProgram.Run(args);
       string elapsedSecondsAndMilliseconds = _stopwatcher.StopAndGetSeconds();
       _resultAndElapsedTimeAndExitCodePrinter.PrintResultAndElapsedTimeAndExitCode(elapsedSecondsAndMilliseconds, exitCode);
-      _consoleWriter.OptionallyPressAnyKeyToContinue(args.waitForAnyKey);
+      _consoleWriter.OptionallyWaitForAnyKeyToContinue(args.waitForAnyKey);
       return exitCode;
    }
 
@@ -36,7 +36,7 @@ public class QuickVsixProgram
       _consoleWriter.WriteProgramNameTimestampedLine(exceptionMessage);
       string elapsedSecondsAndMilliseconds = _stopwatcher.StopAndGetSeconds();
       _resultAndElapsedTimeAndExitCodePrinter.PrintResultAndElapsedTimeAndExitCode(elapsedSecondsAndMilliseconds, 1);
-      _consoleWriter.OptionallyPressAnyKeyToContinue(true);
+      _consoleWriter.OptionallyWaitForAnyKeyToContinue(true);
       return 1;
    }
 }

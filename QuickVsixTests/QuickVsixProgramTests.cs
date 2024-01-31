@@ -62,7 +62,7 @@ public class QuickVsixProgramTests
 
       Mock.Expect(() => _resultAndElapsedTimeAndExitCodePrinterMock.PrintResultAndElapsedTimeAndExitCode(null, 0));
 
-      Mock.Expect(() => _consoleWriterMock.OptionallyPressAnyKeyToContinue(false));
+      Mock.Expect(() => _consoleWriterMock.OptionallyWaitForAnyKeyToContinue(false));
 
       var stringArgs = TestRandom.StringArray();
       //
@@ -74,7 +74,7 @@ public class QuickVsixProgramTests
       Called.Once(() => subProgramMock.Run(args))).Then(
       Called.Once(() => _stopwatcherMock.StopAndGetSeconds())).Then(
       Called.Once(() => _resultAndElapsedTimeAndExitCodePrinterMock.PrintResultAndElapsedTimeAndExitCode(elapsedSecondsAndMilliseconds, exitCode))).Then(
-      Called.Once(() => _consoleWriterMock.OptionallyPressAnyKeyToContinue(args.waitForAnyKey)));
+      Called.Once(() => _consoleWriterMock.OptionallyWaitForAnyKeyToContinue(args.waitForAnyKey)));
       Assert.AreEqual(runReturnValue, exitCode);
    }
 
@@ -87,7 +87,7 @@ public class QuickVsixProgramTests
 
       Mock.Expect(() => _resultAndElapsedTimeAndExitCodePrinterMock.PrintResultAndElapsedTimeAndExitCode(null, 0));
 
-      Mock.Expect(() => _consoleWriterMock.OptionallyPressAnyKeyToContinue(false));
+      Mock.Expect(() => _consoleWriterMock.OptionallyWaitForAnyKeyToContinue(false));
 
       var ex = new Exception(TestRandom.String());
       string[] stringArgs = TestRandom.StringArray();
@@ -99,7 +99,7 @@ public class QuickVsixProgramTests
       Called.Once(() => _consoleWriterMock.WriteProgramNameTimestampedLine(expectedExceptionMessage)).Then(
       Called.Once(() => _stopwatcherMock.StopAndGetSeconds())).Then(
       Called.Once(() => _resultAndElapsedTimeAndExitCodePrinterMock.PrintResultAndElapsedTimeAndExitCode(elapsedSecondsAndMilliseconds, 1))).Then(
-      Called.Once(() => _consoleWriterMock.OptionallyPressAnyKeyToContinue(true)));
+      Called.Once(() => _consoleWriterMock.OptionallyWaitForAnyKeyToContinue(true)));
       Assert.AreEqual(1, exitCode);
    }
 }

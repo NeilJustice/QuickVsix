@@ -34,7 +34,7 @@ public class UninstallVsixSubProgramTests
       Mock.Expect(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath());
 
       var processResult = TestRandom.ProcessResultWithExitCode(1002);
-      Mock.Return(() => p_processRunnerMock.Run(null, null), processResult);
+      Mock.Return(() => p_processRunnerMock.RunWithStandardOutputPrinted(null, null, false), processResult);
 
       var args = QuickVsixTestRandom.Args();
       //
@@ -47,7 +47,7 @@ public class UninstallVsixSubProgramTests
       Called.Once(() => p_processKillerMock.KillAllPotentiallyBlockingProcesses())).Then(
       Called.Once(() => p_vsixZipFileReaderMock.ReadVsixFileForExtensionGuid(args.vsixFilePath))).Then(
       Called.Once(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath())).Then(
-      Called.WasCalled(() => p_processRunnerMock.Run("VSIXInstaller.exe", expectedVsixInstallerArgs))).Then(
+      Called.WasCalled(() => p_processRunnerMock.RunWithStandardOutputPrinted("VSIXInstaller.exe", expectedVsixInstallerArgs, true))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine(
          $"VSIXInstaller.exe exited with code 1002 - meaning the extension is already uninstalled"))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine("")));
@@ -70,7 +70,7 @@ public class UninstallVsixSubProgramTests
       Mock.Expect(() => p_processKillerMock.KillAllPotentiallyBlockingProcesses());
 
       var processResult = TestRandom.ProcessResultWithExitCode(vsixInstallerExitCode);
-      Mock.Return(() => p_processRunnerMock.Run(null, null), processResult);
+      Mock.Return(() => p_processRunnerMock.RunWithStandardOutputPrinted(null, null, false), processResult);
 
       var args = QuickVsixTestRandom.Args();
       //
@@ -83,7 +83,7 @@ public class UninstallVsixSubProgramTests
       Called.Once(() => p_processKillerMock.KillAllPotentiallyBlockingProcesses())).Then(
       Called.Once(() => p_vsixZipFileReaderMock.ReadVsixFileForExtensionGuid(args.vsixFilePath))).Then(
       Called.Once(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath())).Then(
-      Called.WasCalled(() => p_processRunnerMock.Run("VSIXInstaller.exe", expectedVsixInstallerArgs))).Then(
+      Called.WasCalled(() => p_processRunnerMock.RunWithStandardOutputPrinted("VSIXInstaller.exe", expectedVsixInstallerArgs, true))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine(
          $"VSIXInstaller.exe failed with exit code {processResult.exitCode}"))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine("")));
@@ -102,7 +102,7 @@ public class UninstallVsixSubProgramTests
       Mock.Expect(() => p_processKillerMock.KillAllPotentiallyBlockingProcesses());
 
       var processResult = TestRandom.ProcessResultWithExitCode(0);
-      Mock.Return(() => p_processRunnerMock.Run(null, null), processResult);
+      Mock.Return(() => p_processRunnerMock.RunWithStandardOutputPrinted(null, null, false), processResult);
 
       var args = QuickVsixTestRandom.Args();
       //
@@ -115,7 +115,7 @@ public class UninstallVsixSubProgramTests
       Called.Once(() => p_processKillerMock.KillAllPotentiallyBlockingProcesses())).Then(
       Called.Once(() => p_vsixZipFileReaderMock.ReadVsixFileForExtensionGuid(args.vsixFilePath))).Then(
       Called.Once(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath())).Then(
-      Called.Once(() => p_processRunnerMock.Run("VSIXInstaller.exe", expectedVsixInstallerArgs))).Then(
+      Called.Once(() => p_processRunnerMock.RunWithStandardOutputPrinted("VSIXInstaller.exe", expectedVsixInstallerArgs, true))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine(
          $"VSIXInstaller.exe successfully uninstalled Visual Studio extension {args.vsixFilePath}"))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine("")));

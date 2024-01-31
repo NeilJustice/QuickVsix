@@ -8,6 +8,7 @@ namespace CSharpUtils
       private string _programName;
       private readonly Asserter _asserter = new Asserter();
       private readonly MethodCaller _methodCaller = new MethodCaller();
+      private readonly ThreadHelper _threadHelper = new ThreadHelper();
       private readonly Watch _watch = new Watch();
 
       public ConsoleWriter()
@@ -19,11 +20,13 @@ namespace CSharpUtils
          _programName = programName;
       }
 
-      public virtual void OptionallyPressAnyKeyToContinue(bool waitForAnyKey)
+      public virtual string ProgramName => _programName;
+
+      public virtual void OptionallyWaitForAnyKeyToContinue(bool waitForAnyKey)
       {
          if (waitForAnyKey)
          {
-            _methodCaller.CallAction(WriteProgramNameTimestampedLine, "Press any key to continue . . .");
+            _methodCaller.CallAction(Console.WriteLine, "Press any key to continue . . .");
             _methodCaller.CallFunction(Console.ReadLine);
          }
       }
@@ -63,18 +66,43 @@ namespace CSharpUtils
          _methodCaller.CallAction(Console.WriteLine);
       }
 
-      public virtual void WriteProgramNameTimestampedLine(string message)
+      public virtual void WriteProgramNameTimestampedMessageWithoutNewline(string message)
       {
          string dateTimeNow = _watch.DateTimeNowString();
          _asserter.ThrowIfNull(_programName, nameof(_programName));
          string programNameTimestampedMessage = $"[{_programName} {dateTimeNow}] {message}";
-         _methodCaller.CallAction(Console.WriteLine, programNameTimestampedMessage);
+         _methodCaller.CallAction(Console.Write, programNameTimestampedMessage);
+      }
+
+      public virtual void WriteProgramNameTimestampedLine(string message)
+      {
+         _methodCaller.CallAction(WriteProgramNameTimestampedMessageWithoutNewline, $"{message}\n");
       }
 
       public virtual void WriteProgramNameTimestampedLineWithColor(string message, ConsoleColor textColor)
       {
          ConsoleColor initialForegroundColor = _methodCaller.CallFunction(SetForegroundColor, textColor);
          _methodCaller.CallAction(WriteProgramNameTimestampedLine, message);
+         _methodCaller.CallFunction(SetForegroundColor, initialForegroundColor);
+      }
+
+      public virtual void WriteProgramNameTimestampThreadIdLine(string message)
+      {
+         string dateTimeNow = _watch.DateTimeNowString();
+         _asserter.ThrowIfNull(_programName, nameof(_programName));
+         int currentThreadId = _threadHelper.CurrentThreadId();
+         string programNameTimestampThreadIdMessage = $"[{_programName} {dateTimeNow} T{currentThreadId,-3}] {message}";
+         _methodCaller.CallAction(Console.WriteLine, programNameTimestampThreadIdMessage);
+      }
+
+      public virtual void WriteProgramNameTimestampThreadIdLineWithColor(string message, ConsoleColor textColor)
+      {
+         string dateTimeNow = _watch.DateTimeNowString();
+         _asserter.ThrowIfNull(_programName, nameof(_programName));
+         int currentThreadId = _threadHelper.CurrentThreadId();
+         string programNameTimestampThreadIdMessage = $"[{_programName} {dateTimeNow} T{currentThreadId,-3}] {message}";
+         ConsoleColor initialForegroundColor = _methodCaller.CallFunction(SetForegroundColor, textColor);
+         _methodCaller.CallAction(Console.WriteLine, programNameTimestampThreadIdMessage);
          _methodCaller.CallFunction(SetForegroundColor, initialForegroundColor);
       }
    }

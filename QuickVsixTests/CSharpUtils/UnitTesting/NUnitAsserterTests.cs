@@ -11,13 +11,15 @@ public static class NUnitAsserterTests
 
       nunitAsserter.AreEqual(0, 0);
       Assert2.Throws<AssertionException>(() => nunitAsserter.AreEqual(1, 0),
-@"  Expected: 1
+@"  Assert.That(actual, Is.EqualTo(expected))
+  Expected: 1
   But was:  0
 ");
 
       nunitAsserter.AreEqual("hello", "hello");
       Assert2.Throws<AssertionException>(() => nunitAsserter.AreEqual("hello", "goodbye"),
-@"  Expected string length 5 but was 7. Strings differ at index 0.
+@"  Assert.That(actual, Is.EqualTo(expected))
+  Expected string length 5 but was 7. Strings differ at index 0.
   Expected: ""hello""
   But was:  ""goodbye""
   -----------^

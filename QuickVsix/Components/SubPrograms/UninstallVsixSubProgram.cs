@@ -14,7 +14,7 @@ public class UninstallVsixSubProgram : QuickVsixSubProgram
       p_quickVsixLogFilePathPrinter.PrintQuickVsixLogFilePath();
 
       string vsixInstallerArgs = $"/uninstall:{extensionGuid} /quiet /shutdownprocesses /logFile:QuickVsix.log";
-      ProcessResult processResult = p_processRunner.Run("VSIXInstaller.exe", vsixInstallerArgs);
+      ProcessResult processResult = p_processRunner.RunWithStandardOutputPrinted("VSIXInstaller.exe", vsixInstallerArgs, true);
 
       if (processResult.exitCode == 1002)
       {

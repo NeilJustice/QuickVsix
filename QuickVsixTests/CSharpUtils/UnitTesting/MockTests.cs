@@ -1,8 +1,7 @@
-﻿using CSharpUtils;
+﻿using System.Collections.ObjectModel;
+using CSharpUtils;
 using FakeItEasy;
 using NUnit.Framework;
-using System;
-using System.Collections.ObjectModel;
 
 [TestFixture]
 public class MockTests
@@ -37,6 +36,7 @@ public class MockTests
       public virtual ReadOnlyCollection<decimal> GetDecimals() { return null; }
       public virtual ReadOnlyCollection<string> GetStrings() { return null; }
       public virtual Tuple<string, string> GetTupleStringString() { return null; }
+      public virtual Tuple<DateTime, DateTime> GetTupleDateTimeDateTime() { return null; }
    }
 
    public class MockTestClass
@@ -77,6 +77,7 @@ public class MockTests
       Assert2.Throws<AssertionException>(() =>
           Mock.Component<Component>(classInstance, "_privateObjectField"),
 @"  Field ""_privateObjectField""
+Assert.That(actual, Is.EqualTo(expected))
   Expected: <MockTests+Component>
   But was:  <System.Object>
 ");
@@ -112,6 +113,7 @@ public class MockTests
       Assert2.Throws<AssertionException>(() =>
          Mock.NullComponent<Component>(classInstance, "_privateComponentField"),
 @"  Field: _privateComponentField
+Assert.That(anObject, Is.Null)
   Expected: null
   But was:  <MockTests+Component>
 ");
@@ -124,7 +126,8 @@ public class MockTests
       //
       Assert2.Throws<AssertionException>(() =>
          Mock.NullComponent<Component>(classInstance, "_privateNullObjectField"),
-@"  Expected: <MockTests+Component>
+@"  Assert.That(actual, Is.EqualTo(expected))
+  Expected: <MockTests+Component>
   But was:  <System.Object>
 ");
    }
@@ -330,19 +333,11 @@ public class MockTests
    }
 
    [Test]
-   public void ReturnRandomReadOnlyCollection_ExpectsCallAndReturnsRandomReadOnlyCollectionOfT__IntsTestCase()
+   public void ReturnRandomReadOnlyCollection_ExpectsCallAndReturnsRandomReadOnlyCollectionOfT()
    {
       ReadOnlyCollection<int> randomInts = Mock.ReturnRandomReadOnlyCollection(() => _mockObject.GetInts());
       ReadOnlyCollection<int> returnedRandomInts = _mockObject.GetInts();
       Assert.AreEqual(randomInts, returnedRandomInts);
-   }
-
-   [Test]
-   public void ReturnRandomReadOnlyCollection_ExpectsCallAndReturnsRandomReadOnlyCollectionOfT__DecimalsTestCase()
-   {
-      ReadOnlyCollection<decimal> randomDecimals = Mock.ReturnRandomReadOnlyCollection(() => _mockObject.GetDecimals());
-      ReadOnlyCollection<decimal> returnedRandomDecimals = _mockObject.GetDecimals();
-      Assert.AreEqual(randomDecimals, returnedRandomDecimals);
    }
 
    [Test]
@@ -359,6 +354,14 @@ public class MockTests
       Tuple<string, string> tupleStringString = Mock.ReturnRandomTupleStringString(() => _mockObject.GetTupleStringString());
       Tuple<string, string> returnedTupleStringString = _mockObject.GetTupleStringString();
       Assert.AreEqual(tupleStringString, returnedTupleStringString);
+   }
+
+   [Test]
+   public void ReturnRandomTupleDateTimeDateTime_ExpectsCallAndReturnsRandomTupleDateTimeDateTime()
+   {
+      Tuple<DateTime, DateTime> tupleDateTimeDateTime = Mock.ReturnRandomTupleDateTimeDateTime(() => _mockObject.GetTupleDateTimeDateTime());
+      Tuple<DateTime, DateTime> returnedTupleDateTimeDateTime = _mockObject.GetTupleDateTimeDateTime();
+      Assert.AreEqual(tupleDateTimeDateTime, returnedTupleDateTimeDateTime);
    }
 
    [Test]
@@ -380,5 +383,6 @@ public class MockTests
       Assert.IsNull(returnTestClass.GetDecimals());
       Assert.IsNull(returnTestClass.GetStrings());
       Assert.IsNull(returnTestClass.GetTupleStringString());
+      Assert.IsNull(returnTestClass.GetTupleDateTimeDateTime());
    }
 }

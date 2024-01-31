@@ -1,7 +1,8 @@
-﻿using CSharpUtils;
+﻿using System.Diagnostics.CodeAnalysis;
+using CSharpUtils;
 using NUnit.Framework;
-using System.Diagnostics.CodeAnalysis;
 
+[ExcludeFromCodeCoverage]
 class ClassThatDoesNotThrowWhenEqualsToAnObject
 {
 }
@@ -37,27 +38,33 @@ public static class Assert2Tests
    }
 
    [Test]
-   public static void IsNotNullOrEmpty_StringIsNull_ThrowsAssertionException()
+   public static void FieldIsNull_FieldIsNull_DoesNotThrowException()
    {
-      Assert2.Throws<AssertionException>(() => Assert2.IsNotNullOrEmpty(null),
-@"  Expected: not null
-  But was:  null
+      var instance = new FieldIsNullTestClass();
+      Assert2.FieldIsNull(instance, "s");
+   }
+
+   [Test]
+   public static void FieldIsNull_FieldIsNotNull_ThrowsAssertionException()
+   {
+      var instance = new FieldIsNullTestClass
+      {
+         s = "Value"
+      };
+      Assert2.Throws<AssertionException>(() => Assert2.FieldIsNull(instance, "s"),
+          @"  Regarding field ""s""
+Assert.That(anObject, Is.Null)
+  Expected: null
+  But was:  ""Value""
 ");
    }
 
    [Test]
-   public static void IsNotNullOrEmpty_StringIsEmpty_ThrowsAssertionException()
+   public static void FieldIsNull_FieldDoesNotExist_ThrowsArgumentException()
    {
-      Assert2.Throws<AssertionException>(() => Assert2.IsNotNullOrEmpty(""),
-@"  Expected: not <empty>
-  But was:  <string.Empty>
-");
-   }
-
-   [Test]
-   public static void IsNotNullOrEmpty_StringIsNotEmpty_DoesNotThrowException()
-   {
-      Assert.DoesNotThrow(() => Assert2.IsNotNullOrEmpty(TestRandom.String()));
+      var instance = new FieldIsNullTestClass();
+      Assert2.Throws<ArgumentException>(() => Assert2.FieldIsNull(instance, "not_exists"),
+          "Field not found: Assert2Tests+FieldIsNullTestClass.not_exists");
    }
 
    public class BaseClass
@@ -127,6 +134,7 @@ public static class Assert2Tests
       Assert2.Throws<AssertionException>(() =>
          Assert2.FieldIsNonNullAndExactType<BaseClass>(classInstance, "derivedClassField"),
 @"  Field ""derivedClassField""
+Assert.That(actual, Is.EqualTo(expected))
   Expected: <Assert2Tests+BaseClass>
   But was:  <Assert2Tests+DerivedClass>
 ");
@@ -155,6 +163,7 @@ public static class Assert2Tests
       Assert2.Throws<AssertionException>(() =>
          Assert2.FieldIsNullAndExactType<string>(fieldIsExactTypeTester, "privateField"),
 @"  Field: privateField
+Assert.That(anObject, Is.Null)
   Expected: null
   But was:  ""non-null string""
 ");
@@ -166,7 +175,8 @@ public static class Assert2Tests
       var fieldIsExactTypeTester = new FieldIsExactTypeTester();
       Assert2.Throws<AssertionException>(() =>
          Assert2.FieldIsNullAndExactType<BaseClass>(fieldIsExactTypeTester, "nullDerivedClassField"),
-@"  Expected: <Assert2Tests+BaseClass>
+@"  Assert.That(actual, Is.EqualTo(expected))
+  Expected: <Assert2Tests+BaseClass>
   But was:  <Assert2Tests+DerivedClass>
 ");
    }
@@ -195,6 +205,73 @@ public static class Assert2Tests
    }
 
    [Test]
+   public static void EqualsThrowsInvalidCastExceptionWhenComparedWithANewObject_NonFullNameVersion_EqualsDoesNotThrow_ThrowsAssertionException()
+   {
+      var classInstanceThatDoesNotThrowWhenEqualsToAnObject = new ClassThatDoesNotThrowWhenEqualsToAnObject();
+      Assert2.Throws<AssertionException>(() => Assert2.EqualsThrowsInvalidCastExceptionWhenComparedWithANewObject_NonFullNameVersion(
+          classInstanceThatDoesNotThrowWhenEqualsToAnObject),
+          "Action did not throw. Exact expected exception: System.InvalidCastException");
+   }
+
+   [Test]
+   public static void EqualsThrowsInvalidCastExceptionWhenComparedWithANewObject_NonFullNameVersion_EqualsThrows_DoesNotThrowException()
+   {
+      var classInstanceThatDoesThrowWhenEqualsToAnObject = new ClassThatDoesThrowWhenEqualsToAnObject();
+      Assert2.EqualsThrowsInvalidCastExceptionWhenComparedWithANewObject_NonFullNameVersion(classInstanceThatDoesThrowWhenEqualsToAnObject);
+   }
+
+   [Test]
+   public static void IsNotNullOrEmpty_StringIsNull_ThrowsAssertionException()
+   {
+      Assert2.Throws<AssertionException>(() => Assert2.IsNotNullOrEmpty(null),
+@"  Assert.That(anObject, Is.Not.Null)
+  Expected: not null
+  But was:  null
+");
+   }
+
+   [Test]
+   public static void IsNotNullOrEmpty_StringIsEmpty_ThrowsAssertionException()
+   {
+      Assert2.Throws<AssertionException>(() => Assert2.IsNotNullOrEmpty(""),
+@"  Assert.That(aString, Is.Not.Empty)
+  Expected: not <empty>
+  But was:  <string.Empty>
+");
+   }
+
+   [Test]
+   public static void IsNotNullOrEmpty_StringIsNotEmpty_DoesNotThrowException()
+   {
+      Assert.DoesNotThrow(() => Assert2.IsNotNullOrEmpty(TestRandom.String()));
+   }
+
+   [TestCase("", "", false)]
+   [TestCase("a", "a", false)]
+   [TestCase("A", "a", true)]
+   [TestCase(@"\d", "1", false)]
+   [TestCase(@"\d+", "qqq 123", false)]
+   [TestCase(@"\w \w", "1_3", true)]
+   public static void StringMatchesRegex_ReturnsTrueIfStringMatchesRegexPattern(
+      string expectedPattern, string str, bool expectException)
+   {
+      if (expectException)
+      {
+         string exceptionMessage = $@"  Regex.IsMatch(""{expectedPattern}"", ""{str}"")
+Assert.That(condition, Is.True)
+  Expected: True
+  But was:  False
+";
+         Assert2.Throws<AssertionException>(() => Assert2.StringMatchesRegex(expectedPattern, str),
+            exceptionMessage);
+      }
+      else
+      {
+         Assert2.StringMatchesRegex(expectedPattern, str);
+      }
+   }
+
+   [Test]
    [ExcludeFromCodeCoverage]
    public static void Throws_ActionDoesNotThrow_Throws__ExceptionTestCase()
    {
@@ -203,9 +280,9 @@ public static class Assert2Tests
          Assert2.Throws<System.Exception>(() => { }, "");
          Assert.Fail("Did not throw as expected"); // Non-coverable line
       }
-      catch (AssertionException e)
+      catch (AssertionException ex)
       {
-         Assert.AreEqual("Action did not throw. Exact expected exception: System.Exception", e.Message);
+         Assert.AreEqual("Action did not throw. Exact expected exception: System.Exception", ex.Message);
       }
    }
 
@@ -218,9 +295,9 @@ public static class Assert2Tests
          Assert2.Throws<System.IO.IOException>(() => { }, "");
          Assert.Fail("Did not throw as expected"); // Non-coverable line
       }
-      catch (AssertionException e)
+      catch (AssertionException ex)
       {
-         Assert.AreEqual("Action did not throw. Exact expected exception: System.IO.IOException", e.Message);
+         Assert.AreEqual("Action did not throw. Exact expected exception: System.IO.IOException", ex.Message);
       }
    }
 
@@ -233,9 +310,9 @@ public static class Assert2Tests
          Assert2.Throws<System.ArgumentException>(() => { throw new System.IO.IOException(); }, "");
          Assert.Fail("Did not throw as expected"); // Non-coverable line
       }
-      catch (AssertionException e)
+      catch (AssertionException ex)
       {
-         Assert.AreEqual("Action threw System.IO.IOException. Exact expected exception: System.ArgumentException", e.Message);
+         Assert.AreEqual("Action threw System.IO.IOException. Exact expected exception: System.ArgumentException", ex.Message);
       }
    }
 
@@ -248,9 +325,9 @@ public static class Assert2Tests
          Assert2.Throws<FakeItEasy.Core.FakeCreationException>(() => { throw new FakeItEasy.Configuration.FakeConfigurationException(); }, "");
          Assert.Fail("Did not throw as expected"); // Non-coverable line
       }
-      catch (AssertionException e)
+      catch (AssertionException ex)
       {
-         Assert.AreEqual("Action threw FakeItEasy.Configuration.FakeConfigurationException. Exact expected exception: FakeItEasy.Core.FakeCreationException", e.Message);
+         Assert.AreEqual("Action threw FakeItEasy.Configuration.FakeConfigurationException. Exact expected exception: FakeItEasy.Core.FakeCreationException", ex.Message);
       }
    }
 
@@ -263,9 +340,9 @@ public static class Assert2Tests
          Assert2.Throws<System.Exception>(() => { throw new System.InvalidOperationException(); }, "");
          Assert.Fail("Did not throw"); // Non-coverable line
       }
-      catch (AssertionException e)
+      catch (AssertionException ex)
       {
-         Assert.AreEqual("Action threw System.InvalidOperationException. Exact expected exception: System.Exception", e.Message);
+         Assert.AreEqual("Action threw System.InvalidOperationException. Exact expected exception: System.Exception", ex.Message);
       }
    }
 
@@ -278,9 +355,9 @@ public static class Assert2Tests
          Assert2.Throws<System.SystemException>(() => { throw new System.IO.InvalidDataException(); }, "");
          Assert.Fail("Did not throw"); // Non-coverable line
       }
-      catch (AssertionException e)
+      catch (AssertionException ex)
       {
-         Assert.AreEqual("Action threw System.IO.InvalidDataException. Exact expected exception: System.SystemException", e.Message);
+         Assert.AreEqual("Action threw System.IO.InvalidDataException. Exact expected exception: System.SystemException", ex.Message);
       }
    }
 
@@ -293,12 +370,12 @@ public static class Assert2Tests
          Assert2.Throws<Exception>(() => { throw new Exception("def"); }, "abc");
          Assert.Fail("Did not throw"); // Non-coverable line
       }
-      catch (AssertionException e)
+      catch (AssertionException ex)
       {
          string expectedAssertionMessage = @"Action threw exactly System.Exception as expected but with an unexpected Message.
 Expected message: ""abc""
   Actual message: ""def""";
-         Assert.AreEqual(expectedAssertionMessage, e.Message);
+         Assert.AreEqual(expectedAssertionMessage, ex.Message);
       }
    }
 
@@ -314,12 +391,12 @@ Expected message: ""abc""
          }, "message");
          Assert.Fail("Did not throw as expected"); // Non-coverable line
       }
-      catch (AssertionException e)
+      catch (AssertionException ex)
       {
          string expectedAssertionMessage = @"Action threw exactly System.IO.IOException as expected but with an unexpected Message.
 Expected message: ""message""
   Actual message: ""Message""";
-         Assert.AreEqual(expectedAssertionMessage, e.Message);
+         Assert.AreEqual(expectedAssertionMessage, ex.Message);
       }
    }
 
@@ -335,12 +412,12 @@ Expected message: ""message""
          }, "abc message");
          Assert.Fail("Did not throw as expected"); // Non-coverable line
       }
-      catch (AssertionException e)
+      catch (AssertionException ex)
       {
          string expectedAssertionMessage = @"Action threw exactly System.Text.RegularExpressions.RegexMatchTimeoutException as expected but with an unexpected Message.
 Expected message: ""abc message""
   Actual message: ""message""";
-         Assert.AreEqual(expectedAssertionMessage, e.Message);
+         Assert.AreEqual(expectedAssertionMessage, ex.Message);
       }
    }
 
@@ -387,7 +464,19 @@ Expected message: ""Specified method is not supported.""
    }
 
    [Test]
-   public static void PrivateFieldSame_FieldDoesNotExistOnObject_ThrowsArgumentException()
+   public static void MakeExpectedButWas_ReturnsExpected()
+   {
+      string fieldValue = TestRandom.String();
+      //
+      string expectedButWasString = Assert2.MakeExpectedButWas(fieldValue);
+      //
+      Assert.AreEqual(expectedButWasString, $@"  Expected: ""{fieldValue}""
+  But was:  null
+");
+   }
+
+   [Test]
+   public static void PrivateFieldSameAs_FieldDoesNotExistOnObject_ThrowsArgumentException()
    {
       object expectedObject = new object();
       object obj = new object();
@@ -431,5 +520,141 @@ Expected message: ""Specified method is not supported.""
    {
       Unset,
       NonDefaultValue
+   }
+
+   class EqualsTester
+   {
+      public int intFieldAssertedEqual;
+      public int intFieldNotAssertedEqual;
+      public bool boolFieldAssertedEqual;
+      public bool boolFieldNotAssertedEqual;
+      public string jenkinsServerUrlAssertedEqual;
+      public string jenkinsServerUrlNotAssertedEqual;
+      public TestingEnum enumFieldAssertedEqual;
+      public TestingEnum enumFieldNotAssertedEqual;
+
+      public override bool Equals(object obj)
+      {
+         EqualsTester actual = (EqualsTester)obj;
+         Assert.AreEqual(intFieldAssertedEqual, actual.intFieldAssertedEqual);
+         Assert.AreEqual(boolFieldAssertedEqual, actual.boolFieldAssertedEqual);
+         Assert.AreEqual(jenkinsServerUrlAssertedEqual, actual.jenkinsServerUrlAssertedEqual);
+         Assert.AreEqual(enumFieldAssertedEqual, actual.enumFieldAssertedEqual);
+         return true;
+      }
+
+      public override int GetHashCode()
+      {
+         throw new NotSupportedException();
+      }
+   }
+
+   [Test]
+   public static void GetHashCode_ThrowsNotSupportedException()
+   {
+      Assert2.ThrowsNotSupportedException(() => new EqualsTester().GetHashCode());
+   }
+
+   [Test]
+   public static void EqualsThrowsWhenFieldNotEqual_EqualsDoesNotThrowWhenASpecificFieldIsNotEqual_ThrowsAssertionException()
+   {
+      var expected = new EqualsTester();
+      var actual = new EqualsTester();
+      Assert2.Throws<AssertionException>(() => Assert2.EqualsThrowsWhenFieldNotEqual(expected, actual,
+          ref expected.jenkinsServerUrlNotAssertedEqual, ref actual.jenkinsServerUrlNotAssertedEqual, TestRandom.String(), TestRandom.String()),
+          "Action did not throw. Exact expected exception: NUnit.Framework.AssertionException");
+   }
+
+   [Test]
+   public static void EqualsThrowsWhenFieldNotEqual_EqualsThrowsWithExpectedExceptionMessage_DoesNotThrowException()
+   {
+      var expected = new EqualsTester();
+      var actual = new EqualsTester();
+      Assert2.EqualsThrowsWhenFieldNotEqual(expected, actual,
+          ref expected.intFieldAssertedEqual, ref actual.intFieldAssertedEqual, 1,
+          @"  Assert.That(actual, Is.EqualTo(expected))
+  Expected: 1
+  But was:  0
+");
+      Assert2.EqualsThrowsWhenFieldNotEqual(expected, actual,
+          ref expected.jenkinsServerUrlAssertedEqual, ref actual.jenkinsServerUrlAssertedEqual, "Hello",
+          @"  Assert.That(actual, Is.EqualTo(expected))
+  Expected: ""Hello""
+  But was:  null
+");
+   }
+
+   [Test]
+   public static void EqualsThrowsWhenStringFieldNotEqual_EqualsDoesNotThrowWhenStringFieldIsNotEqual_ThrowsAssertionException()
+   {
+      var expected = new EqualsTester();
+      var actual = new EqualsTester();
+      Assert2.Throws<AssertionException>(() => Assert2.EqualsThrowsWhenStringFieldNotEqual(expected, actual,
+          ref expected.jenkinsServerUrlNotAssertedEqual, ref actual.jenkinsServerUrlNotAssertedEqual),
+          "Action did not throw. Exact expected exception: NUnit.Framework.AssertionException");
+   }
+
+   [Test]
+   public static void EqualsThrowsWhenStringFieldNotEqual_EqualsThrowsWhenStringFieldIsNotEqual_DoesNotThrowException()
+   {
+      var expected = new EqualsTester();
+      var actual = new EqualsTester();
+      Assert2.EqualsThrowsWhenStringFieldNotEqual(expected, actual, ref expected.jenkinsServerUrlAssertedEqual, ref actual.jenkinsServerUrlAssertedEqual);
+   }
+
+   [Test]
+   public static void EqualsThrowsWhenBoolFieldNotEqual_EqualsDoesNotThrowWhenBoolFieldIsNotEqual_ThrowsAssertionException()
+   {
+      var expected = new EqualsTester();
+      var actual = new EqualsTester();
+      Assert2.Throws<AssertionException>(() => Assert2.EqualsThrowsWhenBoolFieldNotEqual(expected, actual,
+          ref expected.boolFieldNotAssertedEqual, ref actual.boolFieldNotAssertedEqual),
+          "Action did not throw. Exact expected exception: NUnit.Framework.AssertionException");
+   }
+
+   [Test]
+   public static void EqualsThrowsWhenBoolFieldNotEqual_EqualsThrowsWhenBoolFieldIsNotEqual_DoesNotThrowException()
+   {
+      var expected = new EqualsTester();
+      var actual = new EqualsTester();
+      Assert2.EqualsThrowsWhenBoolFieldNotEqual(expected, actual, ref expected.boolFieldAssertedEqual, ref actual.boolFieldAssertedEqual);
+   }
+
+   [Test]
+   public static void EqualsThrowsWhenIntFieldNotEqual_EqualsDoesNotThrowWhenIntFieldIsNotEqual_ThrowsAssertionException()
+   {
+      var expected = new EqualsTester();
+      var actual = new EqualsTester();
+      Assert2.Throws<AssertionException>(() => Assert2.EqualsThrowsWhenIntFieldNotEqual(expected, actual,
+          ref expected.intFieldNotAssertedEqual, ref actual.intFieldNotAssertedEqual),
+          "Action did not throw. Exact expected exception: NUnit.Framework.AssertionException");
+   }
+
+   [Test]
+   public static void EqualsThrowsWhenIntFieldNotEqual_EqualsThrowsWhenIntFieldIsNotEqual_DoesNotThrowException()
+   {
+      var expected = new EqualsTester();
+      var actual = new EqualsTester();
+      Assert2.EqualsThrowsWhenIntFieldNotEqual(expected, actual, ref expected.intFieldAssertedEqual, ref actual.intFieldAssertedEqual);
+   }
+
+   [Test]
+   public static void EqualsThrowsWhenEnumFieldNotEqual_EqualsDoesNotThrowWhenEnumFieldIsNotEqual_ThrowsAssertionException()
+   {
+      var expected = new EqualsTester();
+      var actual = new EqualsTester();
+      Assert2.Throws<AssertionException>(() => Assert2.EqualsThrowsWhenEnumFieldNotEqual(expected, actual,
+          ref expected.enumFieldNotAssertedEqual, ref actual.enumFieldNotAssertedEqual,
+          TestingEnum.Unset, TestingEnum.NonDefaultValue),
+          "Action did not throw. Exact expected exception: NUnit.Framework.AssertionException");
+   }
+
+   [Test]
+   public static void EqualsThrowsWhenEnumFieldNotEqual_EqualsThrowsWhenEnumFieldIsNotEqual_DoesNotThrowException()
+   {
+      var expected = new EqualsTester();
+      var actual = new EqualsTester();
+      Assert2.EqualsThrowsWhenEnumFieldNotEqual(expected, actual,
+          ref expected.enumFieldAssertedEqual, ref actual.enumFieldAssertedEqual, TestingEnum.Unset, TestingEnum.NonDefaultValue);
    }
 }

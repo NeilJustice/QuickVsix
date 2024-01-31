@@ -16,7 +16,7 @@ public class InstallVsixSubProgram : QuickVsixSubProgram
       p_quickVsixLogFilePathPrinter.PrintQuickVsixLogFilePath();
 
       string vsixInstallerArgs = $"{args.vsixFilePath} /quiet /shutdownprocesses /norepair /logFile:QuickVsix.log";
-      ProcessResult processResult = p_processRunner.Run("VSIXInstaller.exe", vsixInstallerArgs);
+      ProcessResult processResult = p_processRunner.RunWithStandardOutputPrinted("VSIXInstaller.exe", vsixInstallerArgs, true);
       if (processResult.exitCode == 1001)
       {
          p_consoleWriter.WriteProgramNameTimestampedLine(

@@ -36,7 +36,7 @@ public class InstallVsixSubProgramTests
       Mock.Expect(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath());
 
       ProcessResult processResult = TestRandom.ProcessResultWithExitCode(1001);
-      Mock.Return(() => p_processRunnerMock.Run(null, null), processResult);
+      Mock.Return(() => p_processRunnerMock.RunWithStandardOutputPrinted(null, null, false), processResult);
 
       var args = QuickVsixTestRandom.Args();
       //
@@ -50,7 +50,7 @@ public class InstallVsixSubProgramTests
       Called.Once(() => p_vsixZipFileReaderMock.ReadVsixFileForExtensionGuid(args.vsixFilePath))).Then(
       Called.Once(() => p_vsixZipFileReaderMock.PrintFileNamesContainedInVsixFile(args.vsixFilePath))).Then(
       Called.Once(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath())).Then(
-      Called.Once(() => p_processRunnerMock.Run("VSIXInstaller.exe", expectedVSIXInstallerArgs))).Then(
+      Called.Once(() => p_processRunnerMock.RunWithStandardOutputPrinted("VSIXInstaller.exe", expectedVSIXInstallerArgs, true))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine(
          $"VSIXInstaller.exe returned exit code 1001 - meaning the extension {args.vsixFilePath} is already installed"))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine("")));
@@ -75,7 +75,7 @@ public class InstallVsixSubProgramTests
       Mock.Expect(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath());
 
       ProcessResult processResult = TestRandom.ProcessResultWithExitCode(vsixInstallerExitCode);
-      Mock.Return(() => p_processRunnerMock.Run(null, null), processResult);
+      Mock.Return(() => p_processRunnerMock.RunWithStandardOutputPrinted(null, null, false), processResult);
 
       var args = QuickVsixTestRandom.Args();
       //
@@ -89,7 +89,7 @@ public class InstallVsixSubProgramTests
       Called.Once(() => p_vsixZipFileReaderMock.ReadVsixFileForExtensionGuid(args.vsixFilePath))).Then(
       Called.Once(() => p_vsixZipFileReaderMock.PrintFileNamesContainedInVsixFile(args.vsixFilePath))).Then(
       Called.Once(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath())).Then(
-      Called.Once(() => p_processRunnerMock.Run("VSIXInstaller.exe", expectedVSIXInstallerArgs))).Then(
+      Called.Once(() => p_processRunnerMock.RunWithStandardOutputPrinted("VSIXInstaller.exe", expectedVSIXInstallerArgs, true))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine($"VSIXInstaller.exe failed with exit code {processResult.exitCode}"))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine("")));
       Assert.AreEqual(vsixInstallerExitCode, exitCode);
@@ -109,7 +109,7 @@ public class InstallVsixSubProgramTests
       Mock.Expect(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath());
 
       ProcessResult processResult = TestRandom.ProcessResultWithExitCode(0);
-      Mock.Return(() => p_processRunnerMock.Run(null, null), processResult);
+      Mock.Return(() => p_processRunnerMock.RunWithStandardOutputPrinted(null, null, false), processResult);
 
       var args = QuickVsixTestRandom.Args();
       //
@@ -123,7 +123,7 @@ public class InstallVsixSubProgramTests
       Called.Once(() => p_vsixZipFileReaderMock.ReadVsixFileForExtensionGuid(args.vsixFilePath))).Then(
       Called.Once(() => p_vsixZipFileReaderMock.PrintFileNamesContainedInVsixFile(args.vsixFilePath))).Then(
       Called.Once(() => p_quickVsixLogFilePathPrinterMock.PrintQuickVsixLogFilePath())).Then(
-      Called.Once(() => p_processRunnerMock.Run("VSIXInstaller.exe", expectedVSIXInstallerArgs))).Then(
+      Called.Once(() => p_processRunnerMock.RunWithStandardOutputPrinted("VSIXInstaller.exe", expectedVSIXInstallerArgs, true))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine(
          $"VSIXInstaller.exe successfully installed Visual Studio extension {args.vsixFilePath}"))).Then(
       Called.WasCalled(() => p_consoleWriterMock.WriteProgramNameTimestampedLine("")));

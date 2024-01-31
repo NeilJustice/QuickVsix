@@ -7,17 +7,37 @@ namespace CSharpUtils
    [ExcludeFromCodeCoverage]
    public class ProcessRunner
    {
-      private readonly Watch _watch = new Watch();
       private ConsoleWriter _consoleWriter;
-      private string _programName;
 
       public ProcessRunner(string programName)
       {
          _consoleWriter = new ConsoleWriter(programName);
-         _programName = programName;
       }
 
-      public virtual ProcessResult Run(string fileName, string arguments)
+      public string GetConsoleWriterProgramName()
+      {
+         string consoleWriterProgramName = Reflect.Get<string>(_consoleWriter, "_programName");
+         return consoleWriterProgramName;
+      }
+
+      public virtual void RunAndDoNotWaitForProcessToExit(string fileName, string arguments)
+      {
+         using (var process = new Process())
+         {
+            process.StartInfo = new ProcessStartInfo
+            {
+               FileName = fileName,
+               Arguments = arguments
+            };
+            bool didStartNewProcess = process.Start();
+            if (!didStartNewProcess)
+            {
+               throw new InvalidOperationException($"process.Start() returned false. File name and arguments: {fileName} {arguments}");
+            }
+         }
+      }
+
+      public virtual ProcessResult RunWithStandardOutputNotPrinted(string fileName, string arguments)
       {
          using (var process = new Process())
          using (var doneReceivingOutputData = new ManualResetEvent(false))
@@ -35,13 +55,13 @@ namespace CSharpUtils
             };
             string currentDirectoryPath = Directory.GetCurrentDirectory();
             string argumentsPart = string.IsNullOrEmpty(arguments) ? "" : " " + arguments;
-            string dateTimeNow = _watch.DateTimeNowString();
-            Console.WriteLine($"[{_programName} {dateTimeNow}] Running process \"{fileName}{argumentsPart}\" from folder {currentDirectoryPath}");
+            _consoleWriter.WriteProgramNameTimestampThreadIdLine($"Running '{fileName}{argumentsPart}' from folder {currentDirectoryPath}");
             bool didStartNewProcess = process.Start();
             if (!didStartNewProcess)
             {
                throw new InvalidOperationException($"process.Start() returned false. File name and arguments: {fileName} {arguments}");
             }
+
             var standardOutputBuilder = new StringBuilder();
             var standardErrorBuilder = new StringBuilder();
             process.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
@@ -73,55 +93,76 @@ namespace CSharpUtils
             doneReceivingErrorData.WaitOne();
             string standardOutput = standardOutputBuilder.ToString().RemoveCarriageReturns();
             string standardError = standardErrorBuilder.ToString().RemoveCarriageReturns();
-            DateTime endTime = DateTime.Now;
-            int exitCode = process.ExitCode;
             var processResult = new ProcessResult
             {
                processStartInfo = process.StartInfo,
-               exitCode = exitCode,
+               exitCode = process.ExitCode,
                standardOutput = standardOutput,
                standardError = standardError == "\n" ? "" : standardError,
                startTime = process.StartTime,
-               endTime = endTime
+               endTime = DateTime.Now
             };
             return processResult;
          }
       }
 
-      public virtual int RunAndGetExitCode(string fileName, string arguments, bool printRunningMessage)
+      public virtual void FailFastRunWithStandardOutputPrinted(string fileName, string arguments)
+      {
+         ProcessResult processResult = RunWithStandardOutputPrinted(fileName, arguments, true);
+         if (processResult.exitCode != 0)
+         {
+            throw new InvalidOperationException($"Process '{fileName} {arguments}' exited with code {processResult.exitCode}");
+         }
+      }
+
+      public virtual ProcessResult RunWithStandardOutputPrinted(string fileName, string arguments, bool printRunningMessage)
       {
          using (var process = new Process())
+         using (var doneReceivingOutputData = new ManualResetEvent(false))
+         using (var doneReceivingErrorData = new ManualResetEvent(false))
          {
-            string currentDirectoryPath = Directory.GetCurrentDirectory();
-            string argumentsPart = string.IsNullOrEmpty(arguments) ? "" : " " + arguments;
-            var stopwatcher = new Stopwatcher();
-            if (printRunningMessage)
-            {
-               stopwatcher.Start();
-               string runningMessage = $"Running process \"{fileName}{argumentsPart}\" from folder {currentDirectoryPath}";
-               _consoleWriter.WriteProgramNameTimestampedLine(runningMessage);
-            }
+            var standardOutputBuilder = new StringBuilder();
+            var standardErrorBuilder = new StringBuilder();
             process.StartInfo = new ProcessStartInfo
             {
                FileName = fileName,
                Arguments = arguments,
+               RedirectStandardOutput = true,
+               RedirectStandardError = false,
                UseShellExecute = false,
                WorkingDirectory = Directory.GetCurrentDirectory()
             };
+            if (printRunningMessage)
+            {
+               string currentDirectoryPath = Directory.GetCurrentDirectory();
+               string argumentsPart = string.IsNullOrEmpty(arguments) ? "" : " " + arguments;
+               _consoleWriter.WriteProgramNameTimestampedLine($"Running process '{fileName}{argumentsPart}' from folder {currentDirectoryPath}");
+            }
             bool didStartNewProcess = process.Start();
             if (!didStartNewProcess)
             {
                throw new InvalidOperationException($"process.Start() returned false. File name and arguments: {fileName} {arguments}");
             }
-            process.WaitForExit();
-            int exitCode = process.ExitCode;
-            if (printRunningMessage)
+            while (!process.StandardOutput.EndOfStream)
             {
-               string elapsedSeconds = stopwatcher.StopAndGetSeconds();
-               string completedMessage = $"Completed: \"{fileName}{argumentsPart}\" with exit code {exitCode} [{elapsedSeconds} seconds]";
-               _consoleWriter.WriteProgramNameTimestampedLine(completedMessage);
+               string standardOutputLine = process.StandardOutput.ReadLine();
+               standardOutputBuilder.AppendLine(standardOutputLine);
+               Console.WriteLine(standardOutputLine);
             }
-            return exitCode;
+            process.WaitForExit(int.MaxValue);
+            DateTime endTime = DateTime.Now;
+            string standardOutput = standardOutputBuilder.ToString();
+            string standardError = standardErrorBuilder.ToString();
+            var processResult = new ProcessResult
+            {
+               processStartInfo = process.StartInfo,
+               exitCode = process.ExitCode,
+               standardOutput = standardOutput,
+               standardError = standardError,
+               startTime = process.StartTime,
+               endTime = endTime
+            };
+            return processResult;
          }
       }
 

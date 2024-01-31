@@ -96,7 +96,7 @@ namespace CSharpUtils
 
       public static EnumType ReturnRandomEnum<EnumType>(Expression<Func<EnumType>> call)
       {
-         var randomEnum = TestRandom.Enum<EnumType>();
+         EnumType randomEnum = TestRandom.Enum<EnumType>();
          A.CallTo(call).WithAnyArguments().Returns(randomEnum);
          return randomEnum;
       }
@@ -127,6 +127,13 @@ namespace CSharpUtils
          var randomTupleStringString = new Tuple<string, string>(TestRandom.String(), TestRandom.String());
          A.CallTo(call).WithAnyArguments().Returns(randomTupleStringString);
          return randomTupleStringString;
+      }
+
+      public static Tuple<DateTime, DateTime> ReturnRandomTupleDateTimeDateTime(Expression<Func<Tuple<DateTime, DateTime>>> call)
+      {
+         var randomTupleDateTimeDateTime = new Tuple<DateTime, DateTime>(TestRandom.DateTime(), TestRandom.DateTime());
+         A.CallTo(call).WithAnyArguments().Returns(randomTupleDateTimeDateTime);
+         return randomTupleDateTimeDateTime;
       }
    }
 }
