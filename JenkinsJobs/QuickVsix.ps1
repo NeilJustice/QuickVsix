@@ -33,7 +33,7 @@ if ($doInstall -eq "true")
 {
    Remove-Item -Recurse -Verbose "C:\bin\QuickVsixRelease" -ErrorAction Ignore | Out-Null
    mkdir "C:\bin\QuickVsixRelease" -ErrorAction Ignore | Out-Null
-   Copy-Item -Verbose "QuickVsix\bin\Release\net7.0\*" "C:\bin\QuickVsixRelease\"
+   Copy-Item -Verbose "QuickVsix\bin\Release\net8.0\*" "C:\bin\QuickVsixRelease\"
 }
 
 Write-Host "[QuickVsix.ps1] ExitCode: 0"
