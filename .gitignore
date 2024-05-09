@@ -6,11 +6,12 @@ InternalTrace*
 obj/
 packages/
 Release/
+
+*.acv
 *.user
 *.suo
 nunit-agent_*.log
 QuickVsixTests/AltCoverCodeCoverageResults_QuickVsixTests.xml
 QuickVsixTests/CoberturaCodeCoverageResults_QuickVsixTests.xml
 ReportGenerator_QuickVsixTests/
-
 TestsFailedLastTime.txt
