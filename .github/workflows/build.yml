@@ -31,6 +31,7 @@ jobs:
           files: QuickVsixTests/AltCoverCodeCoverageResults_QuickVsixTests.xml
           fail_ci_if_error: true
           verbose: true
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Archive QuickVsix.exe
         uses: actions/upload-artifact@v4
