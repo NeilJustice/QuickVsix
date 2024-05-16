@@ -4,7 +4,7 @@
 <a href="https://codecov.io/gh/NeilJustice/QuickVsix"><img src="https://codecov.io/gh/NeilJustice/QuickVsix/branch/main/graph/badge.svg?token=bkBnGJEyHz"></a>
 </p>
 
-QuickVsix is a C#/.NET 7 Windows command line program for quickly and non-interactively installing and uninstalling Visual Studio extensions.
+QuickVsix is a C# command line program for quickly and non-interactively installing and uninstalling Visual Studio extensions.
 
 The default workflow for installing and uninstalling Visual Studio extensions is by way of a sequence of mouse clicks on interactive install and uninstall dialogs, which costs time and focus relative to the non-interactive command line user experience provided by QuickVsix.exe.
 
