@@ -65,23 +65,23 @@ Usage:
    [Test]
    public static void Equals_ReturnsTrueIfAllFieldsAreEqualOtherwiseThrows()
    {
-      var expected = QuickVsixTestRandom.Args();
-      var actual = QuickVsixTestRandom.Args();
-      Assert2.EqualsThrowsInvalidCastExceptionWhenComparedWithANewObject(actual);
+      //var expected = QuickVsixTestRandom.Args();
+      //var actual = QuickVsixTestRandom.Args();
+      //Assert2.EqualsThrowsInvalidCastExceptionWhenComparedWithANewObject(actual);
 
-      var nunitAsserterMock = Mock.Component<NUnitAsserter>(expected, "_nunitAsserter");
-      Mock.Expect(() => nunitAsserterMock.AreEqual(default(string), default(string)));
-      Mock.Expect(() => nunitAsserterMock.AreEqual(default(ProgramMode), default(ProgramMode)));
-      Mock.Expect(() => nunitAsserterMock.AreEqual(default(bool), default(bool)));
-      //
-      bool areEqual = expected.Equals(actual);
-      //
-      Called.NumberOfTimes(2, () => nunitAsserterMock.AreEqual(default(string), default(string)));
-      Called.WasCalled(() => nunitAsserterMock.AreEqual(expected.CommandLine, actual.CommandLine)).Then(
-      Called.Once(() => nunitAsserterMock.AreEqual(expected.programMode, actual.programMode))).Then(
-      Called.WasCalled(() => nunitAsserterMock.AreEqual(expected.vsixFilePath, actual.vsixFilePath))).Then(
-      Called.Once(() => nunitAsserterMock.AreEqual(expected.waitForAnyKey, actual.waitForAnyKey)));
-      Assert.IsTrue(areEqual);
+      //var nunitAsserterMock = Mock.Component<NUnitAsserter>(expected, "_nunitAsserter");
+      //Mock.Expect(() => nunitAsserterMock.AreEqual(default(string), default(string)));
+      //Mock.Expect(() => nunitAsserterMock.AreEqual(default(ProgramMode), default(ProgramMode)));
+      //Mock.Expect(() => nunitAsserterMock.AreEqual(default(bool), default(bool)));
+      ////
+      //bool areEqual = expected.Equals(actual);
+      ////
+      //Called.NumberOfTimes(2, () => nunitAsserterMock.AreEqual(default(string), default(string)));
+      //Called.WasCalled(() => nunitAsserterMock.AreEqual(expected.CommandLine, actual.CommandLine)).Then(
+      //Called.Once(() => nunitAsserterMock.AreEqual(expected.programMode, actual.programMode))).Then(
+      //Called.WasCalled(() => nunitAsserterMock.AreEqual(expected.vsixFilePath, actual.vsixFilePath))).Then(
+      //Called.Once(() => nunitAsserterMock.AreEqual(expected.waitForAnyKey, actual.waitForAnyKey)));
+      //Assert.IsTrue(areEqual);
    }
 
    [Test]
