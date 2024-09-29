@@ -1,0 +1,42 @@
+name: QuickVsix
+on: [push]
+
+jobs:
+  build:
+    runs-on: [windows-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      
+      - name: Install altcover.exe
+        run: |
+           dotnet.exe tool install --global altcover.global
+           altcover.exe version
+      
+      - name: Build solution
+        run: dotnet.exe build QuickVsix.sln --configuration Release
+
+      - name: Run NUnit tests with AltCover code coverage
+        run: dotnet.exe test /p:AltCover=true /p:AltCoverReport="AltCoverCodeCoverageResults_QuickVsixTests.xml" /p:AltCoverAssemblyFilter="AltCover.Monitor|DocoptPlus|FakeItEasy|NUnit3.TestAdapter" /p:AltCoverAttributeFilter="ExcludeFromCodeCoverage"
+
+      - name: Upload code coverage results to Codecov.io
+        uses: codecov/codecov-action@v4
+        with:
+          files: QuickVsixTests/AltCoverCodeCoverageResults_QuickVsixTests.xml
+          fail_ci_if_error: true
+          verbose: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+          
+      - name: Archive QuickVsix.exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: QuickVsix
+          path: |
+            QuickVsix/bin/Release/net8.0/*
+            !QuickVsix/bin/Release/net8.0/nunit.framework.dll
