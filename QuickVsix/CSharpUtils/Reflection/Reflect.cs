@@ -18,7 +18,7 @@ namespace CSharpUtils
          return instanceField;
       }
 
-      public static object Get(object obj, string fieldName)
+      public static object ObjectGet(object obj, string fieldName)
       {
          Type objectType = obj.GetType();
          FieldInfo instanceField = GetFieldInfo(objectType, fieldName);
@@ -29,7 +29,7 @@ namespace CSharpUtils
 
       public static T Get<T>(object obj, string fieldName)
       {
-         T instanceField = (T)Get(obj, fieldName);
+         T instanceField = (T)ObjectGet(obj, fieldName);
          return instanceField;
       }
 

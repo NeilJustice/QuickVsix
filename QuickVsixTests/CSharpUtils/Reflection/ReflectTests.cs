@@ -46,12 +46,12 @@ public static class ReflectTests
    {
       var x = new X();
 
-      Assert.AreEqual(0, Reflect.Get(x, "x"));
-      Assert2.Throws<ArgumentException>(() => Reflect.Get(x, "x123"),
+      Assert.AreEqual(0, Reflect.ObjectGet(x, "x"));
+      Assert2.Throws<ArgumentException>(() => Reflect.ObjectGet(x, "x123"),
           "Field not found: ReflectTests+X.x123");
 
       Reflect.Set(x, "x", 10);
-      Assert.AreEqual(10, Reflect.Get(x, "x"));
+      Assert.AreEqual(10, Reflect.ObjectGet(x, "x"));
       Assert2.Throws<ArgumentException>(() => Reflect.Set(x, "x123", 10),
           "Field not found: ReflectTests+X.x123");
       Assert2.Throws<ArgumentException>(() => Reflect.Set(x, "x", "not_an_int"),

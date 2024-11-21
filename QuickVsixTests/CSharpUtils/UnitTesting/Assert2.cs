@@ -104,7 +104,7 @@ namespace CSharpUtils
 
       public static void FieldIsNull(object obj, string fieldName)
       {
-         object field = Reflect.Get(obj, fieldName);
+         object field = Reflect.ObjectGet(obj, fieldName);
          Assert.IsNull(field, "Regarding field \"" + fieldName + "\"");
       }
 
