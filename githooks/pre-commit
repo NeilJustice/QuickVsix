@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pwsh.exe -noprofile JenkinsJobs/QuickVsix.ps1 true false
+pwsh.exe -noprofile JenkinsJobs/Windows/QuickVsix.ps1 true false
 jenkinsJobExitCode=$?
 if [ "$jenkinsJobExitCode" -ne 0 ]; then
    echo ""
