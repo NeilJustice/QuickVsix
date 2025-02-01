@@ -1,6 +1,6 @@
 param($isRunByGitPrecommit = "false", $doInstall = "true")
 
-BuildAnalyzeTestDeploy.exe build-dotnet-csharp-program `
+BuildAnalyzeTestDeploy.exe build-csharp-program `
    --solution-name=QuickVsix `
    --configuration=Release `
    --tests-project-name=QuickVsixTests `
