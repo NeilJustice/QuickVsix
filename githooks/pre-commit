@@ -1,16 +1,2 @@
 #!/bin/bash
-
-pwsh.exe -noprofile JenkinsJobs/Windows/QuickVsix.ps1 true false
-jenkinsJobExitCode=$?
-if [ "$jenkinsJobExitCode" -ne 0 ]; then
-   echo ""
-   echo "<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"
-   echo "githooks/pre-commit script: Git commit rejected. This Git repo's Debug Jenkins job failed to build successfully on this machine with exit code $jenkinsJobExitCode."
-   echo "<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"
-   exit $jenkinsJobExitCode
-fi
-echo ""
-echo "**********************************************************************************************************************"
-echo "githooks/pre-commit script: Git commit accepted. This Git repo's Debug Jenkins job built successfully on this machine."
-echo "**********************************************************************************************************************"
-exit $jenkinsJobExitCode
+GitCMakeHelper.exe run-precommit-script --language=C# --solution-name=QuickVsix
