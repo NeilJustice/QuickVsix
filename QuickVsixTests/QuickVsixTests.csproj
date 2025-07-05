@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="AltCover" Version="9.0.1" />
     <PackageReference Include="FakeItEasy" Version="8.3.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
   </ItemGroup>
 
