@@ -1,12 +1,9 @@
-﻿using CSharpUtils;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text.RegularExpressions;
+using CSharpUtils;
+using NUnit.Framework;
 
 struct UserType
 {
@@ -300,7 +297,7 @@ public static class TestRandomTests
    }
 
    [Test]
-   public static void ProcessResultWithExitCode_ReturnsNewProcessResultWithAllRandomFields()
+   public static void TestableProcessResultWithExitCode_DoesSo()
    {
       var randomGeneratorMock = Mock.Strict<RandomGenerator>();
       string fileName = TestRandom.String();

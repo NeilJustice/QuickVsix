@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace CSharpUtils
 {
@@ -190,6 +187,12 @@ namespace CSharpUtils
             randomStringArray[i] = randomString;
          }
          return randomStringArray;
+      }
+
+      public static ProcessResult ProcessResultWithRandomExitCode()
+      {
+         int randomExitCode = TestRandom.Int();
+         return TestableProcessResultWithExitCode(randomExitCode, RandomGenerator.Instance);
       }
 
       public static ProcessResult ProcessResultWithExitCode(int exitCode)

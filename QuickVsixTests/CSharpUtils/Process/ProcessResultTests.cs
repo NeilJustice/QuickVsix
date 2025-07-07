@@ -1,7 +1,5 @@
 ﻿using CSharpUtils;
 using NUnit.Framework;
-using System;
-using System.Diagnostics.CodeAnalysis;
 
 [TestFixture]
 public static class ProcessResultTests
@@ -35,8 +33,8 @@ public static class ProcessResultTests
    [Test]
    public static void Equals_ThrowsIfAnyFieldNotEqual_OtherwiseReturnsTrue()
    {
-      ProcessResult expected = TestRandom.ProcessResultWithExitCode(TestRandom.Int());
-      ProcessResult actual = TestRandom.ProcessResultWithExitCode(TestRandom.Int());
+      ProcessResult expected = TestRandom.ProcessResultWithRandomExitCode();
+      ProcessResult actual = TestRandom.ProcessResultWithRandomExitCode();
       Assert2.EqualsThrowsInvalidCastExceptionWhenComparedWithANewObject(expected);
 
       NUnitAsserter nunitAsserterMock = Mock.Strict<NUnitAsserter>();
