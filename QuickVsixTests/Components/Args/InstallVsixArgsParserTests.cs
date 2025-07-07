@@ -22,16 +22,15 @@ public class InstallVsixArgsParserTests
 
       bool waitForAnyKey = Mock.ReturnRandomBool(() => p_docoptParserMock.GetOptionalBool(null, null));
 
-      var docoptDictionary = new Dictionary<string, DocoptValueObject>().ToReadOnlyDictionary();
-      ProgramMode programMode = TestRandom.Enum<ProgramMode>();
+      var docoptDictionary = DocoptPlusTestRandom.DocoptDictionary();
       //
-      QuickVsixArgs args = _installVsixArgsParser.ParseDocoptDictionary(docoptDictionary, programMode);
+      QuickVsixArgs args = _installVsixArgsParser.ParseDocoptDictionary(docoptDictionary);
       //
       Called.Once(() => p_docoptParserMock.GetRequiredFilePathWhichMustExist(docoptDictionary, "--vsix-file")).Then(
       Called.Once(() => p_docoptParserMock.GetOptionalBool(docoptDictionary, "--wait-for-any-key")));
       var expectedArgs = new QuickVsixArgs
       {
-         programMode = programMode,
+         programMode = ProgramMode.InstallVsix,
          vsixFilePath = vsixFilePath,
          waitForAnyKey = waitForAnyKey
       };

@@ -57,9 +57,9 @@ Usage:
    [Test]
    public void Populate_ThrowsNotSupportedException()
    {
-      var docoptArguments = new Dictionary<string, DocoptValueObject>().ToReadOnlyDictionary();
+      var docoptDictionary = DocoptPlusTestRandom.DocoptDictionary();
       //
-      Assert2.ThrowsNotSupportedException(() => _quickVsixArgs.Populate(docoptArguments));
+      Assert2.ThrowsNotSupportedException(() => _quickVsixArgs.Populate(docoptDictionary));
    }
 
    [Test]

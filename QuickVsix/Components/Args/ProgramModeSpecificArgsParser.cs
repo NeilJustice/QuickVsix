@@ -9,7 +9,7 @@ public class ProgramModeSpecificArgsParser
    protected readonly DocoptParser p_docoptParser = new DocoptParser();
    protected readonly FileSystem p_fileSystem = new FileSystem();
 
-   public virtual QuickVsixArgs ParseDocoptDictionary(ReadOnlyDictionary<string, DocoptValueObject> docoptDictionary, ProgramMode programMode)
+   public virtual QuickVsixArgs ParseDocoptDictionary(ReadOnlyDictionary<string, DocoptValueObject> docoptDictionary)
    {
       throw new NotSupportedException();
    }

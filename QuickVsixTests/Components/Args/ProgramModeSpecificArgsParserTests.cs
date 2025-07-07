@@ -19,6 +19,6 @@ public static class ProgramModeSpecificArgsParserTests
    public static void ParseStringArgs_ThrowsNotSupportedException()
    {
       var programModeSpecificArgsParser = new ProgramModeSpecificArgsParser();
-      Assert2.ThrowsNotSupportedException(() => programModeSpecificArgsParser.ParseDocoptDictionary(null, ProgramMode.Unset));
+      Assert2.ThrowsNotSupportedException(() => programModeSpecificArgsParser.ParseDocoptDictionary(null));
    }
 }

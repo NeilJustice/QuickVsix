@@ -31,9 +31,9 @@ public class QuickVsixArgsParserTests
    }
 
    [Test]
-   public void ParseStringArgs_ParsesStringArgsForDocoptDictionary_GetsProgramMode_NewsProgramModeSpecificArgsParser_ParsesArgs_ReturnsArg()
+   public void ParseStringArgs_DoesSo()
    {
-      ReadOnlyDictionary<string, DocoptValueObject> docoptDictionary = new Dictionary<string, DocoptValueObject>().ToReadOnlyDictionary();
+      var docoptDictionary = DocoptPlusTestRandom.DocoptDictionary();
       Mock.Return(() => _docoptParserMock.ParseStringArgsForDocoptDictionary<QuickVsixArgs>(null), docoptDictionary);
 
       ProgramMode programMode = Mock.ReturnRandomEnum(() => _docoptParserMock.GetProgramMode<ProgramMode>(null, null));
@@ -42,7 +42,7 @@ public class QuickVsixArgsParserTests
       Mock.Return(() => _programModeSpecificArgsParserFactoryMock.New(default), programModeSpecificArgsParserMock);
 
       QuickVsixArgs args = QuickVsixTestRandom.Args();
-      Mock.Return(() => programModeSpecificArgsParserMock.ParseDocoptDictionary(null, default), args);
+      Mock.Return(() => programModeSpecificArgsParserMock.ParseDocoptDictionary(null), args);
 
       string[] stringArgs = TestRandom.StringArray();
       //
@@ -51,7 +51,7 @@ public class QuickVsixArgsParserTests
       Called.Once(() => _docoptParserMock.ParseStringArgsForDocoptDictionary<QuickVsixArgs>(stringArgs)).Then(
       Called.Once(() => _docoptParserMock.GetProgramMode(docoptDictionary, QuickVsixArgs.programModesDictionary))).Then(
       Called.Once(() => _programModeSpecificArgsParserFactoryMock.New(programMode))).Then(
-      Called.Once(() => programModeSpecificArgsParserMock.ParseDocoptDictionary(docoptDictionary, programMode)));
+      Called.Once(() => programModeSpecificArgsParserMock.ParseDocoptDictionary(docoptDictionary)));
       Assert.AreEqual(args, returnedArgs);
    }
 }

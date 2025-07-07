@@ -1,7 +1,6 @@
-﻿using CSharpUtils;
+﻿using System.Collections.ObjectModel;
+using CSharpUtils;
 using DocoptPlus;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 public class QuickVsixArgsParser
 {
@@ -20,7 +19,7 @@ public class QuickVsixArgsParser
       ReadOnlyDictionary<string, DocoptValueObject> docoptDictionary = _docoptParser.ParseStringArgsForDocoptDictionary<QuickVsixArgs>(stringArgs);
       ProgramMode programMode = _docoptParser.GetProgramMode(docoptDictionary, QuickVsixArgs.programModesDictionary);
       ProgramModeSpecificArgsParser programModeSpecificArgsParser = _programModeSpecificArgsParserFactory.New(programMode);
-      QuickVsixArgs args = programModeSpecificArgsParser.ParseDocoptDictionary(docoptDictionary, programMode);
+      QuickVsixArgs args = programModeSpecificArgsParser.ParseDocoptDictionary(docoptDictionary);
       return args;
    }
 }
