@@ -1,2 +1,2 @@
 #!/bin/bash
-GitCMakeHelper.exe run-precommit-script --language=C# --solution-name=QuickVsix
+GitCMakeHelper run-precommit-script --language=C# --solution-name=QuickVsix
