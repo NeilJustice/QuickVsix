@@ -6,11 +6,11 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-dotnet@v3
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '8.0.x'
 
@@ -26,7 +26,7 @@ jobs:
         run: dotnet.exe test /p:AltCover=true /p:AltCoverReport="AltCoverCodeCoverageResults_QuickVsixTests.xml" /p:AltCoverAssemblyFilter="AltCover.Monitor|DocoptPlus|FakeItEasy|NUnit3.TestAdapter" /p:AltCoverAttributeFilter="ExcludeFromCodeCoverage"
 
       - name: Upload code coverage results to Codecov.io
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           files: QuickVsixTests/AltCoverCodeCoverageResults_QuickVsixTests.xml
           fail_ci_if_error: true
@@ -34,7 +34,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Archive QuickVsix.exe
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: QuickVsix
           path: |
