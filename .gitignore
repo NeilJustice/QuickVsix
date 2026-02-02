@@ -15,4 +15,4 @@ QuickVsix/Properties/launchSettings.json
 QuickVsixTests/AltCoverCodeCoverageResults_QuickVsixTests.xml
 QuickVsixTests/CoberturaCodeCoverageResults_QuickVsixTests.xml
 ReportGenerator_QuickVsixTests/
-TestsFailedLastTime.txt
+LastTestRunFailed.txt
