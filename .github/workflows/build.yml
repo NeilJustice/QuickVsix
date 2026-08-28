@@ -6,7 +6,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -26,7 +26,7 @@ jobs:
         run: dotnet.exe test /p:AltCover=true /p:AltCoverReport="AltCoverCodeCoverageResults_QuickVsixTests.xml" /p:AltCoverAssemblyFilter="AltCover.Monitor|DocoptPlus|FakeItEasy|NUnit3.TestAdapter" /p:AltCoverAttributeFilter="ExcludeFromCodeCoverage"
 
       - name: Upload code coverage results to Codecov.io
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           files: QuickVsixTests/AltCoverCodeCoverageResults_QuickVsixTests.xml
           fail_ci_if_error: true
